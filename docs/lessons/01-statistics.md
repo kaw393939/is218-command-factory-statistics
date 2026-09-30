@@ -156,7 +156,7 @@ Expected: eight passing cases and the same numeric demonstration as before. Coun
 | Result is approximately 14.1421 | Did you use ddof=0 instead of the required 1? |
 | One observation returns NaN | Did you add the count check? |
 | A missing observation disappears | Did you validate before std(), which skips missing values by default? |
-| Numeric strings fail immediately | Did you retain the temporary float-only implementation rather than final conversion policy? |
+| Numeric strings fail immediately | Did you try converting the whole list with float(values) rather than converting its elements? |
 
 ## Independent exercise
 

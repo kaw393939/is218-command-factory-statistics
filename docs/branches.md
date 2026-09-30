@@ -1,9 +1,39 @@
-# How the branches work
+# Work through branches without losing your solution
 
-main contains shared readings. learn/01-statistics through learn/06-ci contain cumulative worked examples. A branch is a snapshot of the whole project, not a folder to combine with another snapshot.
+main is the course home and contains all lesson readings. Each learn branch is a complete cumulative application snapshot. You do not combine branch folders. You build one solution in a separate folder and consult the matching snapshot when needed.
 
-Create a separate solution folder. At each stage, predict results, type the annotated code, run the tests, explain the responsibilities, change one thing, and commit your checkpoint. Do not switch branches inside your own solution to discard work.
+| Branch | New responsibility | Reference test cases |
+| --- | --- | ---: |
+| learn/01-statistics | Shared validation and calculation | 8 |
+| learn/02-command | Manual request object | 11 |
+| learn/03-csv | File request object | 14 |
+| learn/04-factory | Central construction choice | 18 |
+| learn/05-repl | Interactive invocation and recovery | 22 |
+| learn/06-ci | CI and design reflection | 22 |
 
-To inspect a reference: `git clone https://github.com/kaw393939/is218-command-factory-statistics.git`, change into its folder, then `git switch learn/01-statistics`. Later run `git switch learn/02-command` after committing any local experiments. Compare neighboring snapshots on GitHub to identify what changed.
+Counts include parametrized cases. Your independent exercises may add tests; an exact count is not your grading target.
 
-The practice starter intentionally contains incomplete code. Its solution is on a separate solution branch for review after your timed attempt. The real exam supplies a fresh starter.
+## At each stage
+
+1. Open the lesson and write your predictions in a learning log.
+2. Create/change only the files listed in its change table.
+3. Run each small checkpoint before completing the final snapshot.
+4. Compare your files with the worked branch if you are stuck.
+5. Run earlier tests too; a new feature must preserve their behavior.
+6. Explain the design, complete an independent exercise, and commit in your solution repository.
+
+Use `git switch learn/02-command` only inside statistics-reference to inspect the next snapshot. A virtual environment is an ignored local folder, so switching branches does not rebuild it; reinstall requirements if they change. If Git refuses to switch because you changed tracked files, inspect `git diff` and save the experiment on your own branch before switching. Do not discard work just to follow a reading link.
+
+## Compare neighboring stages
+
+GitHub Compare shows the application changes between two stage branches. Documentation may also differ; focus first on calculator/ and tests/.
+
+```bash
+git diff learn/02-command..learn/03-csv -- calculator tests
+```
+
+The two dots compare the branch tips. This is a reading command inside the reference checkout, not an instruction to overwrite your solution.
+
+## Tutorial versus assessment
+
+The tutorial branches contain worked examples. The practice repository main branch contains TODO skeletons and acceptance tests. Its solution branch is for review after your timed attempt. The real test will vary a bounded requirement; exact requirements are provided with the test.

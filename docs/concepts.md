@@ -1,9 +1,27 @@
-# Core concepts
+# Concepts to keep nearby
 
-An object combines state and behavior. A command stores the information needed for a request and exposes execute(). Polymorphism lets the invoker use the same method on either input source. An abstract base class states the required contract.
+Use this page as a reference after you encounter an idea in a lesson. It is not a substitute for the worked explanation.
 
-A Simple Factory chooses and constructs a concrete object. The CLI asks for one without importing every command class. Creation and execution remain separate.
+| Concept | Meaning in this application | Evidence to point to |
+| --- | --- | --- |
+| Object | State and behavior belonging to an instance | A command with saved values |
+| Abstraction | A contract callers can use without concrete details | execute() on Command |
+| Polymorphism | Same request method, object-specific behavior | Manual and CSV execute() implementations |
+| Delegation | Ask another component to do part of the work | Command calls standard_deviation() |
+| Separation of concerns | Different reasons to change live in different components | Prompts in CLI; statistic in shared function |
+| Dependency | A component relies on another's interface/behavior | Factory imports concrete commands |
+| Contract | Inputs, outputs, and failure behavior callers can expect | Numeric result or useful input/file error |
+| Simple Factory | Selection and construction in one creation helper | CommandFactory.create() |
+| Invoker | Decides when a request runs | CLI's command.execute() call |
 
-A pandas DataFrame represents the CSV table; a Series represents its value column. Sample standard deviation divides by n-1. Specify ddof explicitly so the statistical policy is visible. Validate first: pandas otherwise skips missing values by default.
+## Values, types, and validation
 
-Keep one shared calculation function. Both commands delegate to it. The CLI owns prompting and formatting; commands own requests; the factory owns selection. Tests should assert observable results, rejected input, correct command types, and recovery after errors.
+input() returns text. split() makes a list of text tokens. A pandas Series gives the values a one-dimensional data container. pd.to_numeric tries conversion. Validation rejects nonfinite values and insufficient observations. std(ddof=1) calculates the sample statistic. float() returns a Python number. The CLI formats that number for display.
+
+A type hint documents an expectation; it is not automatic input validation in Python. ABC checks that required abstract methods are implemented, not whether their return values satisfy every promise. Tests and implementation enforce the behavioral contract.
+
+## Distinguish the tools
+
+Pandas handles data. Pytest checks claims about behavior. Git records versions. GitHub hosts repositories. Actions runs checks. Command and Simple Factory describe software organization. None replaces the others.
+
+[Architecture](architecture.md) · [Pattern scenarios](patterns-and-features.md) · [Glossary](glossary.md)

@@ -1,15 +1,29 @@
-# Glossary
+# Vocabulary with evidence
 
-| Term | Meaning here |
-| --- | --- |
-| Command | Object representing a request through execute() |
-| Invoker | CLI that decides when to execute a request |
-| Simple Factory | Central function/method selecting and constructing a concrete command |
-| Factory Method | Different pattern: an overridable creation method in a creator hierarchy |
-| ABC | Abstract base class defining required methods |
-| DataFrame | pandas table loaded from a CSV |
-| Series | pandas one-dimensional collection |
-| ddof | Degrees-of-freedom adjustment in the variance denominator |
-| REPL | Read–evaluate–print loop |
-| CI | Automated checks in a fresh environment |
-| Approximate assertion | Numeric comparison allowing floating-point rounding |
+| Term | Plain meaning | Example here |
+| --- | --- | --- |
+| Algorithm | Procedure for obtaining a result | Standard-deviation calculation |
+| Design pattern | Reusable arrangement addressing a recurring design problem | Command |
+| Creational | Concerned with construction | Factory-style selection |
+| Structural | Concerned with arranging components | Adapter, discussed as a transfer example |
+| Behavioral | Concerned with actions/responsibilities/communication | Command |
+| Command | Object representing a request | ManualStdDevCommand(values) |
+| Invoker | Caller initiating execution | CLI |
+| Receiver | Component performing delegated work in the general pattern | Shared function fills the work role in our simplified design |
+| Simple Factory | Selects and constructs a concrete object | CommandFactory.create() |
+| Factory Method | Creation delegated through an overridable creator method | A different design, not implemented here |
+| ABC | Abstract base class declaring required behavior | Command(ABC) |
+| Constructor | Initialization of a new object | __init__ stores request inputs |
+| Snapshot | Copy taken at a particular time | list(values) |
+| DataFrame | Two-dimensional pandas table | CSV after read_csv() |
+| Series | One-dimensional pandas collection | frame["value"] |
+| ddof | Adjustment in the variance denominator n-ddof | ddof=1 for sample deviation |
+| NaN | A special nonfinite numeric value, often marking missing data | Rejected input |
+| Fixture | Test setup/tool supplied by pytest | tmp_path |
+| Parametrization | Run one test with several inputs | Invalid-value cases |
+| Mock/patch | Replace a dependency for a controlled test | Fake input() |
+| REPL | Read–evaluate–print loop | Interactive CLI |
+| CI | Repeat automated checks in a fresh environment | GitHub Actions workflow |
+| Commit SHA | Identity of a Git commit | Submitted version |
+
+A word alone is not proof of a design. Explain the relationship it describes and point to its implementation.

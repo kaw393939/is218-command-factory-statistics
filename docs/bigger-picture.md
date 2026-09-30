@@ -1,11 +1,12 @@
-# The bigger picture
+# The bigger picture: a map for the course
 
-Your earlier calculator packaged two operands and a calculation. Here a command packages a request with a variable-length collection or a file path. The CLI is an explicit invoker. Queues, undo, and a separate receiver object are possible Command extensions, not requirements for this small exercise.
+Begin with [Before you code](big-picture.md), which connects this assignment to your previous calculator and explains feature, design, and implementation.
 
-Simple Factory makes selection visible and centralized. It does not become formal Factory Method merely because its method is called create(). Choose terminology that matches the actual relationship.
+Then explore:
 
-Single responsibility keeps input, calculation, construction, and presentation separate. A shared execute() contract supports substitution only when both implementations honor the promised behavior: numeric output or useful input/file errors. The factory still changes when a new input source is added; do not claim the entire application is closed to modification.
+- [Patterns and familiar features](patterns-and-features.md): categories, scenarios, and tradeoffs.
+- [Architecture and execution](architecture.md): roles, dependencies, and request traces.
+- [Language transfer](language-transfer.md): use design knowledge while investigating unfamiliar syntax and runtime rules.
+- [Guided readings](reading-guide.md): focused Refactoring.Guru sections and questions.
 
-The old History display assumed a and b. A variable-length statistic cannot satisfy that assumption unchanged. Design transfer includes recognizing contracts that need revision, not forcing new features into old classes.
-
-Explain how you would add a JSON input command. Identify changes to construction, prompts, and tests. Then explain how the same objects could be called by a web interface without putting terminal input inside commands.
+The small calculator lets you inspect the entire design. The general lesson is to locate responsibilities, choose a contract, explain a change, and verify behavior. Pattern vocabulary helps you communicate those decisions; names alone cannot establish good design.

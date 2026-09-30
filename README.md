@@ -1,8 +1,16 @@
-# Learn Command and Simple Factory by Building a Statistics Calculator
+# Learn design patterns by building a statistics calculator
 
-Start with a collection of numbers. Grow it into a tested, interactive application that reads CSV data with pandas. Build on the OOP calculator: move from two operands and get_result() to requests with execute().
+You already built an OOP calculator. Now learn how to organize requests, separate responsibilities, and explain your code using a vocabulary that carries into other programs and languages.
 
-This default branch is the course home, not the finished application. Read the reference, then type your solution in a separate project. Follow **predict → type → run → explain → change one thing**.
+The project is small: calculate **sample standard deviation** from typed values or a supplied CSV using pandas. The lessons make the design visible: **Command** represents the requests, a **Simple Factory** constructs them, and the CLI decides when to execute them.
+
+## Begin with the question, not the code
+
+[Start here: the big picture](docs/big-picture.md) → [Set up your own solution](docs/setup.md) → [Stage 1](docs/lessons/01-statistics.md).
+
+**main is the course home, not a runnable application.** All lesson readings are available here. The learn branches contain cumulative working snapshots. [Branch instructions](docs/branches.md) explain how to inspect references while building your own solution separately.
+
+## See what you will build
 
 ```text
 > manual
@@ -14,26 +22,34 @@ Standard deviation: 15.8114
 Goodbye!
 ```
 
-## Your learning path
+## Your learning journey
 
-| Stage | Worked-example branch |
-| --- | --- |
-| 1 | [A collection and a statistic](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/01-statistics) |
-| 2 | [Package a request as a Command](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/02-command) |
-| 3 | [Read the supplied CSV](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/03-csv) |
-| 4 | [Create requests through a Simple Factory](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/04-factory) |
-| 5 | [Connect objects to an interactive loop](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/05-repl) |
-| 6 | [Automate checks and explain the design](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/06-ci) |
+| Stage | Lesson | Worked reference |
+| --- | --- | --- |
+| 1 | [From two operands to a collection](docs/lessons/01-statistics.md) | [Cumulative code](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/01-statistics) |
+| 2 | [Turn a request into a Command](docs/lessons/02-command.md) | [Cumulative code](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/02-command) |
+| 3 | [Give a CSV request the same contract](docs/lessons/03-csv.md) | [Cumulative code](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/03-csv) |
+| 4 | [Move construction into a Simple Factory](docs/lessons/04-factory.md) | [Cumulative code](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/04-factory) |
+| 5 | [Make the CLI an invoker](docs/lessons/05-repl.md) | [Cumulative code](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/05-repl) |
+| 6 | [Publish, investigate, and explain your design](docs/lessons/06-ci.md) | [Cumulative code](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/06-ci) |
 
-Each branch contains cumulative working code, meaningful tests, an annotated lesson, and the earlier lessons. [How branches work](docs/branches.md) explains reference code versus your own solution.
+Each lesson starts with a problem, asks for predictions, introduces small coding checkpoints, explains unfamiliar tools, and ends with an independent exercise. Follow **predict → type → run → explain → change one thing**. This tutorial is preparation over multiple study sessions; the practice exam is a separate 90-minute attempt.
 
-## Keep nearby
+## Understand the wider design landscape
 
-- [Workspace setup](docs/setup.md)
-- [Assignment and completion criteria](docs/assignment.md)
-- [Core concepts](docs/concepts.md) and [glossary](docs/glossary.md)
-- [The bigger picture](docs/bigger-picture.md)
-- [Instructor guide](docs/instructor-guide.md)
-- [90-minute practice exam](https://github.com/kaw393939/is218-statistics-practice)
+- [Pattern categories and familiar features](docs/patterns-and-features.md): creation, structure, behavior, and examples beyond calculators.
+- [Architecture and request traces](docs/architecture.md): follow construction, execution, data conversion, and display.
+- [Guided Refactoring.Guru readings](docs/reading-guide.md): focused sections with questions and calculator mappings.
+- [Learning other languages](docs/language-transfer.md): transfer design understanding while learning syntax, libraries, and runtime rules.
 
-The practice exam demonstrates the format and difficulty. **The real test will not be exactly the same.** Expect a small change to the calculation or requirements; understand and adapt your solution.
+## Keep nearby as you work
+
+[Assignment criteria](docs/assignment.md) · [Testing guide](docs/testing-guide.md) · [Troubleshooting](docs/troubleshooting.md) · [Concepts](docs/concepts.md) · [Glossary](docs/glossary.md) · [Learning log](docs/learning-log.md) · [Instructor guide](docs/instructor-guide.md)
+
+A short function-based solution could meet the feature requirements. We deliberately practice request objects and centralized construction so you can explain when they help and what complexity they add. You only implement Command and Simple Factory; the other patterns are recognition and transfer examples.
+
+## Rehearse after learning
+
+Read [practice preparation](docs/practice-preparation.md), then fork [the practice starter](https://github.com/kaw393939/is218-statistics-practice). It includes environment instructions and 100-point Actions feedback. Review its separate solution branch after your attempt.
+
+**The real test will not be exactly the same.** Expect a bounded change to the calculation or requirements. Learn to trace and adapt your design rather than memorize a particular answer.

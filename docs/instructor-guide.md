@@ -1,23 +1,57 @@
-# Instructor guide
+# Teach the decisions, not just the files
 
-## Sequence
+## Start from the previous assignment
 
-Students first completed the [OOP calculator](https://github.com/kaw393939/is218-oop-calculator). Teach the new collection contract, then Command, CSV input, Simple Factory, REPL integration, and CI. Use the annotated branches as a textbook, not a code-copy submission.
+Students already built the [OOP calculator](https://github.com/kaw393939/is218-oop-calculator). Ask them to trace construction, get_result(), and history display. Then introduce a variable-length dataset and ask which assumptions no longer fit. Let them identify the contract change before showing the new architecture.
 
-## Practice and assessment
+Use [the big picture](big-picture.md) before Stage 1. Distinguish feature, design, and implementation. Introduce categories through familiar scenarios, then focus implementation on Command and Simple Factory. Do not turn the overview into an obligation to code every pattern.
 
-Use [is218-statistics-practice](https://github.com/kaw393939/is218-statistics-practice) for a 90-minute rehearsal. Reserve roughly 10 minutes for setup/reading, 25 for shared calculation and manual Command, 20 for CSV and factory, 20 for CLI and error recovery, and 15 for checks and submission. Release the worked practice solution after the attempt if you want a closed-reference rehearsal; it is available on the solution branch in this public practice repository.
+## Suggested instructional rhythm
 
-The real test will not be identical. Keep infrastructure and interfaces stable and change one bounded mathematical requirement. The exact variation and real solution belong in the separate local instructor kit, never the public teaching history.
+| Stage | Pause for a prediction | Evidence of understanding | Likely misconception |
+| --- | --- | --- | --- |
+| 1 | Equal values / one observation | Explain sample statistic and validation | Pandas automatically enforces our input policy |
+| 2 | Change original list after construction | Distinguish request from result | execute() naming alone establishes Command |
+| 3 | Change file before a second execution | Trace DataFrame → Series → shared policy | CSV constructor freezes file contents |
+| 4 | Create without executing | Identify selection and construction | Simple Factory equals Factory Method |
+| 5 | Invalid request followed by valid request | Trace recovery and invoker roles | Factory should also prompt and calculate |
+| 6 | Local environment absent on CI | Read the useful failure evidence | An old green run verifies current work |
 
-Public grading gives feedback, not tamper-proof marks. Students can edit their forks' tests/workflow. Final grading uses instructor-owned tests against the submitted commit and a short design review. Do not use fork workflow scores as the sole official grade. No 100% coverage requirement is imposed during the timed exam.
+Teach across multiple sessions; the tutorial is not timed. Smaller numbered checkpoints allow a student to run one change before absorbing the next. Independent exercises intentionally go beyond supplied tests.
 
-## Questions to assess understanding
+## Use Refactoring.Guru actively
 
-1. Trace create("manual", values) through construction and execution.
-2. Why is input() in the CLI rather than a Command?
-3. Where is the one mathematical policy, and why share it?
-4. Why is this Simple Factory rather than Factory Method?
-5. How would you adapt to a changed statistic?
+Assign exact sections rather than whole catalogs. Before reading, give a question; afterward, map roles to this application and discuss a tradeoff. Use [the reading guide](reading-guide.md). Link to the original site for diagrams and detailed examples; our lessons provide original calculator examples and explanations, not copied chapters or illustrations.
 
-Set reference-material/AI policy and a deadline in the exam README before release. The default policy permits course notes and one's own practice code but requires individual work and prohibits AI assistance or communication during the timed attempt. Adjust to your course rules.
+Ask students to explain how our receiver work is represented by a function and how the CLI combines setup and invocation in this small design. They should recognize the adaptation rather than claim a literal match to every diagram box.
+
+## Teach tests with the code
+
+Demonstrate one direct assertion and one expected exception before parametrization. Introduce tmp_path during CSV testing. Before showing the CLI tests, expand the reference lambda into a named fake_input function and walk each iterator answer against an input() call. See [testing guide](testing-guide.md).
+
+Keep older checks. Do not make coverage percentage a substitute for correct assertions. The exam does not impose a 100% coverage threshold.
+
+## Discussion prompts and review activities
+
+- Explain which component changes when prompt text changes, then when the statistic changes.
+- Show create() returning execute() and ask which contract it breaks.
+- Give an Observer or Adapter scenario and ask for a simpler alternative too.
+- Ask a student to explain a pattern without using its name, then identify it.
+- Have students review a README from a fresh clone and improve one ambiguous instruction.
+- Use [language transfer](language-transfer.md) to identify known design relationships and unknown language rules.
+
+Suggested assessment: behavior 30%, design explanation 25%, meaningful tests 20%, reproducible workflow 15%, transfer reflection 10%. This tutorial rubric is distinct from the practice exam's published automated categories; adjust and announce your course grading before assigning it.
+
+## Prepare for the 90-minute practice
+
+Use [is218-statistics-practice](https://github.com/kaw393939/is218-statistics-practice). Students should already have practiced environment setup and GitHub access. The timed attempt includes setup, reading, implementation, checks, and submission. The public solution branch is available; instruct students to consult it after their rehearsal if you want an unaided first attempt.
+
+The real test stays a familiar structure with a bounded variation. Do not reveal the exact private exam plan in public teaching commits. The local instructor kit holds that plan, solution, and immutable-commit grader. Confirm the exam resource policy, release access, deadline, and submission channel before release.
+
+Public fork-owned Actions scores are feedback. Official grading uses instructor-owned checks against the submitted SHA and a short responsibility review. A student can alter tests in their fork, so a green fork workflow alone cannot establish official correctness.
+
+## Maintain the course
+
+All branches carry the revised shared readings; their application snapshots remain cumulative. Embedded complete-file examples are checked against the matching branch. Run `python tools/verify_course.py --full` from a reference checkout with requirements installed and all branches fetched. The main-branch Course checks workflow verifies documentation and the six application snapshots.
+
+When changing application code, update its matching lesson and downstream snapshots deliberately. When only explanation changes, preserve application behavior and keep the branch references accurate.

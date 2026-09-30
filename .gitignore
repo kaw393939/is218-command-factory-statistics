@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+grade-results.json
+grade-summary.md
+submission-work/

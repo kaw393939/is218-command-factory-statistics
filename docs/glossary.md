@@ -1,6 +1,6 @@
-# Vocabulary introduced through Part 3
+# Vocabulary introduced through Part 4
 
-[Branch home](../README.md) · [Part 3 lesson](lessons/03-flexible-inputs.md)
+[Branch home](../README.md) · [Part 4 lesson](lessons/04-commands.md)
 
 Use each definition to explain an actual call, value, or state change.
 
@@ -51,5 +51,19 @@ Use each definition to explain an actual call, value, or state change.
 | Default | Setting used when the caller omits that named argument |
 | Snapshot | Stored input collection independent of later edits to the original collection |
 | Domain error | Mathematical inputs outside the supported domain, such as a negative real square root |
+
+## Part 4: Application actions
+
+| Term | Meaning here |
+| --- | --- |
+| Command | Object representing an application action with execute() |
+| Abstract class / ABC | Contract that can prevent incomplete subclasses from being instantiated |
+| abstractmethod | Marks a method that a concrete subclass must implement |
+| Polymorphism | Invoke different actions through their common execute capability |
+| Invoker / receiver | CLI invoking execute / session doing the stateful work |
+| REPL | Read input, evaluate a request, print, and repeat |
+| Side effect | Change beyond returning a value, such as recording or clearing history |
+| Type hint | Expectation for readers/tools; not automatic runtime enforcement |
+| Fixture / monkeypatch / capsys | Test resource / temporary replacement / captured output |
 
 A shallow copy protects collection membership; it does not freeze contained objects. Static method binding is not a speed guarantee.

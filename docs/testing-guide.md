@@ -1,6 +1,6 @@
-# Retain behavior evidence through Part 3
+# Retain behavior evidence through Part 4
 
-[Branch home](../README.md) · [Part 3 lesson](lessons/03-flexible-inputs.md)
+[Branch home](../README.md) · [Part 4 lesson](lessons/04-commands.md)
 
 You already know pytest and CI from the prerequisite. A changed public interface requires adapted calls, while its existing behavioral claims remain regression requirements.
 
@@ -17,12 +17,22 @@ Identify setup, action, and assertion. `pytest.approx` compares floating-point r
 | Factory selects behavior but does not execute it | [tests/test_factory.py](../tests/test_factory.py): `test_factory_configures_calculation / test_factory_does_not_execute` |
 | Positional counts and named settings follow explicit rules | [tests/test_factory.py](../tests/test_factory.py): `test_argument_counts_and_named_options / test_reject_invalid_argument_contract` |
 | History reads protect membership and remain shallow | [tests/test_history.py](../tests/test_history.py): `test_history_copy_protects_collection_membership / test_history_objects_are_shared_by_the_shallow_copy` |
+| Incomplete action classes cannot be instantiated | [tests/test_commands.py](../tests/test_commands.py): `test_contract_is_abstract` |
+| Execution failure records no successful entry | [tests/test_commands.py](../tests/test_commands.py): `test_failure_is_not_recorded` |
+| Sessions own independent history | [tests/test_history.py](../tests/test_history.py): `test_sessions_have_independent_history` |
+| An invalid request permits a later successful request | [tests/test_cli.py](../tests/test_cli.py): `test_recovers_after_invalid_input` |
+| EOF and Ctrl+C end the loop cleanly | [tests/test_cli.py](../tests/test_cli.py): `test_input_ends_cleanly` |
 
 ## Preserve the earlier contracts
 
 Keep arithmetic, finite input/result, deferred execution, and History ownership evidence when adding features. History reads must use `get_history()`. Clear the returned list, then read again to prove its membership was protected. Also check independent History owners and that an entry preserves its saved result without asking its calculation to execute again.
 
 Part 3 changes `Calculation(a, b, operation)` to `Calculation(values, operation, **options)`. Adapt the earlier History tests to the collection constructor instead of deleting their claims. Test the default and a nondefault setting, unsupported/nonfinite options, and positional/named forwarding.
+
+For terminal recovery, `monkeypatch` supplies input and `capsys` captures
+output. Include invalid input followed by a valid request and exit. Check both
+the error and later result. A fake input running out is a test/protocol mismatch,
+not an expected user failure to conceal.
 
 ## Run from this branch's repository root
 

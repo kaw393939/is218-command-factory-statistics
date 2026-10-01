@@ -1,8 +1,8 @@
 # Part 1: Refactor the calculator you already built
 
-[Course home](../../README.md) · [Worked reference](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/01-refactoring/calculator) · [Concepts](../concepts.md)
+[Course home](../../README.md) · [Worked reference](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/01-refactoring/calculator) · [Concepts](https://github.com/kaw393939/is218-command-factory-statistics/blob/main/docs/concepts.md)
 
-[Next part](02-factory.md)
+[Next part](https://github.com/kaw393939/is218-command-factory-statistics/blob/learn/02-factory/docs/lessons/02-factory.md)
 
 ## Start from a completed project
 

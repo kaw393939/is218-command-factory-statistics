@@ -57,7 +57,7 @@ git diff origin/learn/01-refactoring..origin/learn/02-factory -- calculator test
 
 The [GitHub comparison](https://github.com/kaw393939/is218-command-factory-statistics/compare/learn/01-refactoring...learn/02-factory) shows the same first increment. Change both branch names to compare later neighbors. Part 3 intentionally changes operand interfaces; explain that requirement rather than treating the changed signature as an accidental regression.
 
-The former course branches have been replaced by this chain. Old branch URLs and instructions for the previous organization are no longer the current navigation. Consult [migration](migration.md) for API changes and use [setup](setup.md) for separate solution/reference environments.
+The former course branches have been replaced by this chain. Old branch URLs and instructions for the previous organization are no longer the current navigation. Consult [migration](https://github.com/kaw393939/is218-command-factory-statistics/blob/main/docs/migration.md) for API changes and use [setup](setup.md) for separate solution/reference environments.
 
 ## For maintainers
 

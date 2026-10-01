@@ -73,4 +73,4 @@ python -m pytest -q
 
 Save any intended experiments before switching. Read the matching branch's README and lesson, then return to your own solution to implement the change and retain earlier behavior tests. Each new branch builds on the previous one; [navigation](branches.md) explains comparisons and tracking branches.
 
-Checkpoint: your prerequisite tests run, you can identify your solution and reference folders, and you can explain the initial request flow. See [migration](migration.md) and [troubleshooting](troubleshooting.md) before [Part 1](lessons/01-refactoring.md).
+Checkpoint: your prerequisite tests run, you can identify your solution and reference folders, and you can explain the initial request flow. See [migration](https://github.com/kaw393939/is218-command-factory-statistics/blob/main/docs/migration.md) and [troubleshooting](https://github.com/kaw393939/is218-command-factory-statistics/blob/main/docs/troubleshooting.md) before [Part 1](https://github.com/kaw393939/is218-command-factory-statistics/blob/learn/01-refactoring/docs/lessons/01-refactoring.md).

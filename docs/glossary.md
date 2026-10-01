@@ -1,6 +1,6 @@
-# Vocabulary introduced through Part 1
+# Vocabulary introduced through Part 2
 
-[Branch home](../README.md) · [Part 1 lesson](lessons/01-refactoring.md)
+[Branch home](../README.md) · [Part 2 lesson](lessons/02-factory.md)
 
 Use each definition to explain an actual call, value, or state change.
 
@@ -26,5 +26,16 @@ Use each definition to explain an actual call, value, or state change.
 | Spy | Callable recording calls to establish timing or delegation |
 | Refactoring | Reorganize code while preserving its intended observable behavior |
 | CI / commit SHA | Automated checks for a revision / that revision's identity |
+
+## Part 2: Selection and construction
+
+| Term | Meaning here |
+| --- | --- |
+| Registry | Dictionary associating operation names with selected callables |
+| Class attribute | Value held on the class, such as the shared operation registry |
+| Normalization | Transform a name into the agreed lookup form, here strip/lower |
+| Simple Factory / product | Creation helper / the configured Calculation it returns |
+| Factory Method | Overridable creator method in an inheritance arrangement; not our helper |
+| Construction / execution | Prepare and store a request / invoke its mathematical behavior |
 
 A shallow copy protects collection membership; it does not freeze contained objects. Static method binding is not a speed guarantee.

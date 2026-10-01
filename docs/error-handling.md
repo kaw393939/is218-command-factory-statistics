@@ -1,6 +1,6 @@
-# Locate failure through Part 1
+# Locate failure through Part 2
 
-[Branch home](../README.md) · [Part 1 lesson](lessons/01-refactoring.md)
+[Branch home](../README.md) · [Part 2 lesson](lessons/02-factory.md)
 
 EAFP attempts an operation and handles expected failure. LBYL checks a precondition before attempting. Expect common success? Consider EAFP. Expect frequent rejection? Consider a cheap, reliable check. Failure frequency and correctness matter more than unpredictable ordering.
 
@@ -9,6 +9,7 @@ EAFP attempts an operation and handles expected failure. LBYL checks a precondit
 | Convert numeric text | Attempt float conversion; handle its expected failure |
 | Reject NaN/infinity | Check the explicit finite-number contract |
 | Divide by zero | Let arithmetic report ZeroDivisionError during execution |
+| Select an operation | Catch KeyError only around the dictionary lookup; report an unknown name |
 
 ## Follow the skipped work
 

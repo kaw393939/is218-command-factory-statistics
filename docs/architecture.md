@@ -1,6 +1,6 @@
-# Follow the program through Part 1
+# Follow the program through Part 2
 
-[Branch home](../README.md) · [Part 1 lesson](lessons/01-refactoring.md)
+[Branch home](../README.md) · [Part 2 lesson](lessons/02-factory.md)
 
 Read this alongside the current code. Label stored state, calls, returned values, and statements skipped after failure.
 
@@ -13,26 +13,26 @@ Read this alongside the current code. Label stored state, calls, returned values
 | [calculation.py](../calculator/calculation.py) | Store operands and a callable; execute in get_result() |
 | [history.py](../calculator/history.py) | Own successful calculation/result entries; return a shallow read copy |
 | [__main__.py](../calculator/__main__.py) | Run this part's demonstration |
+| [factory.py](../calculator/factory.py) | Select a callable by name and construct a calculation without executing it |
 
 ## Trace one successful request
 
 ```python
-from calculator.calculation import Calculation
-from calculator.operations import Operations
+from calculator.factory import CalculationFactory
 
-calculation = Calculation("2", "3", Operations.add)
+calculation = CalculationFactory.create(" ADD ", "2", "3")
 result = calculation.get_result()
 assert result == 5.0
 ```
 
-Construction converts the two strings to `self.a == 2.0` and `self.b == 3.0`,
-then stores `Operations.add` without calling it. `get_result()` calls that
-function with the stored operands and returns a finite float. The demonstration
-caller prints the number.
+The factory normalizes the name to `add`, selects the callable, and constructs
+`Calculation(a, b, operation)`. The calculation stores `2.0`, `3.0`, and
+`Operations.add`; addition has not happened when the factory returns. The
+caller executes `get_result()` and prints its returned number.
 
 ## Trace one failed request
 
-`Calculation("1", "0", Operations.divide)` can be constructed: zero is a valid finite operand. When the caller asks for `get_result()`, division raises `ZeroDivisionError` and no result returns. Construction and execution are different failure boundaries.
+`CalculationFactory.create("divide", "1", "0")` can be constructed: zero is a valid finite operand. When the caller asks for `get_result()`, division raises `ZeroDivisionError` and no result returns. Construction and execution are different failure boundaries.
 
 A caller saving history must place `History.add(calculation, result)` after successful execution. `History.add()` does not run math itself.
 

@@ -1,3 +1,2 @@
-from calculator.calculation import Calculation
-from calculator.operations import Operations
-print(Calculation(2, 3, Operations.add).get_result())
+from calculator.factory import CalculationFactory
+print(CalculationFactory.create("add", 2, 3).get_result())

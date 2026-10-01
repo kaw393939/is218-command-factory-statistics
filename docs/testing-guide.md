@@ -1,6 +1,6 @@
-# Retain behavior evidence through Part 1
+# Retain behavior evidence through Part 2
 
-[Branch home](../README.md) · [Part 1 lesson](lessons/01-refactoring.md)
+[Branch home](../README.md) · [Part 2 lesson](lessons/02-factory.md)
 
 You already know pytest and CI from the prerequisite. A changed public interface requires adapted calls, while its existing behavioral claims remain regression requirements.
 
@@ -14,6 +14,9 @@ Identify setup, action, and assertion. `pytest.approx` compares floating-point r
 | Construction stores behavior without calling it | [tests/test_refactoring.py](../tests/test_refactoring.py): `test_construction_does_not_call_math` |
 | Clearing a read copy preserves owned history | [tests/test_refactoring.py](../tests/test_refactoring.py): `test_history_copy_protects_membership` |
 | A domain failure occurs during execution | [tests/test_refactoring.py](../tests/test_refactoring.py): `test_execution_reports_zero_division` |
+| Normalized name selects the requested calculation | [tests/test_factory.py](../tests/test_factory.py): `test_factory_constructs_selected_calculation` |
+| Factory construction does not execute math | [tests/test_factory.py](../tests/test_factory.py): `test_factory_never_executes` |
+| Unknown names fail at selection | [tests/test_factory.py](../tests/test_factory.py): `test_factory_reports_unknown_name` |
 
 ## Preserve the earlier contracts
 

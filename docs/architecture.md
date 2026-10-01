@@ -1,6 +1,6 @@
-# Follow the program through Part 2
+# Follow the program through Part 3
 
-[Branch home](../README.md) · [Part 2 lesson](lessons/02-factory.md)
+[Branch home](../README.md) · [Part 3 lesson](lessons/03-flexible-inputs.md)
 
 Read this alongside the current code. Label stored state, calls, returned values, and statements skipped after failure.
 
@@ -20,15 +20,16 @@ Read this alongside the current code. Label stored state, calls, returned values
 ```python
 from calculator.factory import CalculationFactory
 
-calculation = CalculationFactory.create(" ADD ", "2", "3")
+calculation = CalculationFactory.create("power", "3", exponent="4")
 result = calculation.get_result()
-assert result == 5.0
+assert result == 81.0
 ```
 
-The factory normalizes the name to `add`, selects the callable, and constructs
-`Calculation(a, b, operation)`. The calculation stores `2.0`, `3.0`, and
-`Operations.add`; addition has not happened when the factory returns. The
-caller executes `get_result()` and prints its returned number.
+The factory collects positional values and named options, validates their
+contracts, and converts numeric text. `Calculation` stores `(3.0,)`, a callable,
+and `{"exponent": 4.0}`. Its constructor receives one values collection.
+Execution expands that collection and mapping into `Operations.power(3.0,
+exponent=4.0)`. The caller receives a number; creation has not performed math.
 
 ## Trace one failed request
 

@@ -1,6 +1,6 @@
-# Vocabulary introduced through Part 2
+# Vocabulary introduced through Part 3
 
-[Branch home](../README.md) · [Part 2 lesson](lessons/02-factory.md)
+[Branch home](../README.md) · [Part 3 lesson](lessons/03-flexible-inputs.md)
 
 Use each definition to explain an actual call, value, or state change.
 
@@ -37,5 +37,19 @@ Use each definition to explain an actual call, value, or state change.
 | Simple Factory / product | Creation helper / the configured Calculation it returns |
 | Factory Method | Overridable creator method in an inheritance arrangement; not our helper |
 | Construction / execution | Prepare and store a request / invoke its mathematical behavior |
+
+## Part 3: Different inputs and settings
+
+| Term | Meaning here |
+| --- | --- |
+| Arity | Number of operands required by an operation |
+| Tuple / mapping | Positional sequence / association of names with values |
+| *values | Gather positional arguments in a definition; unpack a sequence at a call |
+| **options | Gather named arguments in a definition; unpack a mapping at a call |
+| args / kwargs | Conventional names, not required Python keywords |
+| Keyword-only setting | Argument requiring a name, such as exponent=4 after a bare * |
+| Default | Setting used when the caller omits that named argument |
+| Snapshot | Stored input collection independent of later edits to the original collection |
+| Domain error | Mathematical inputs outside the supported domain, such as a negative real square root |
 
 A shallow copy protects collection membership; it does not freeze contained objects. Static method binding is not a speed guarantee.

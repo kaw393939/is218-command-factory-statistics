@@ -1,6 +1,6 @@
-# Retain behavior evidence through Part 2
+# Retain behavior evidence through Part 3
 
-[Branch home](../README.md) · [Part 2 lesson](lessons/02-factory.md)
+[Branch home](../README.md) · [Part 3 lesson](lessons/03-flexible-inputs.md)
 
 You already know pytest and CI from the prerequisite. A changed public interface requires adapted calls, while its existing behavioral claims remain regression requirements.
 
@@ -10,17 +10,19 @@ Identify setup, action, and assertion. `pytest.approx` compares floating-point r
 
 | Required behavior | Supplied evidence |
 | --- | --- |
-| Static arithmetic works without constructing Operations | [tests/test_refactoring.py](../tests/test_refactoring.py): `test_math_without_an_instance` |
-| Construction stores behavior without calling it | [tests/test_refactoring.py](../tests/test_refactoring.py): `test_construction_does_not_call_math` |
-| Clearing a read copy preserves owned history | [tests/test_refactoring.py](../tests/test_refactoring.py): `test_history_copy_protects_membership` |
-| A domain failure occurs during execution | [tests/test_refactoring.py](../tests/test_refactoring.py): `test_execution_reports_zero_division` |
-| Normalized name selects the requested calculation | [tests/test_factory.py](../tests/test_factory.py): `test_factory_constructs_selected_calculation` |
-| Factory construction does not execute math | [tests/test_factory.py](../tests/test_factory.py): `test_factory_never_executes` |
-| Unknown names fail at selection | [tests/test_factory.py](../tests/test_factory.py): `test_factory_reports_unknown_name` |
+| Binary and unary operations preserve their math contracts | [tests/test_operations.py](../tests/test_operations.py): `test_arithmetic / test_unary_operations` |
+| A collection operation supports several values and rejects empty input | [tests/test_operations.py](../tests/test_operations.py): `test_sum_accepts_a_collection` |
+| Construction defers execution and snapshots the values | [tests/test_calculation.py](../tests/test_calculation.py): `test_construction_defers_execution_and_snapshots_inputs` |
+| Execution rejects a nonfinite result | [tests/test_calculation.py](../tests/test_calculation.py): `test_reject_nonfinite_result` |
+| Factory selects behavior but does not execute it | [tests/test_factory.py](../tests/test_factory.py): `test_factory_configures_calculation / test_factory_does_not_execute` |
+| Positional counts and named settings follow explicit rules | [tests/test_factory.py](../tests/test_factory.py): `test_argument_counts_and_named_options / test_reject_invalid_argument_contract` |
+| History reads protect membership and remain shallow | [tests/test_history.py](../tests/test_history.py): `test_history_copy_protects_collection_membership / test_history_objects_are_shared_by_the_shallow_copy` |
 
 ## Preserve the earlier contracts
 
 Keep arithmetic, finite input/result, deferred execution, and History ownership evidence when adding features. History reads must use `get_history()`. Clear the returned list, then read again to prove its membership was protected. Also check independent History owners and that an entry preserves its saved result without asking its calculation to execute again.
+
+Part 3 changes `Calculation(a, b, operation)` to `Calculation(values, operation, **options)`. Adapt the earlier History tests to the collection constructor instead of deleting their claims. Test the default and a nondefault setting, unsupported/nonfinite options, and positional/named forwarding.
 
 ## Run from this branch's repository root
 

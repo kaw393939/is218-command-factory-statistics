@@ -1,6 +1,6 @@
-# Follow the program through Part 4
+# Follow the program through Part 5
 
-[Branch home](../README.md) · [Part 4 lesson](lessons/04-commands.md)
+[Branch home](../README.md) · [Part 5 lesson](lessons/05-statistics-csv.md)
 
 Read this alongside the current code. Label stored state, calls, returned values, and statements skipped after failure.
 
@@ -17,6 +17,8 @@ Read this alongside the current code. Label stored state, calls, returned values
 | [session.py](../calculator/session.py) | Execute first, then record success through History |
 | [commands.py](../calculator/commands.py) | Represent calculate/history/clear/help actions; return display text |
 | [cli.py](../calculator/cli.py) | Prepare actions, invoke execute(), print, and recover from expected errors |
+| [statistics.py](../calculator/statistics.py) | Apply the observation/count/deviation policy using pandas |
+| [inputs.py](../calculator/inputs.py) | Read the value column from CSV without performing math |
 
 ## Trace one successful request
 
@@ -61,3 +63,13 @@ results. `ClearHistoryCommand` calls `session.clear()`. Those actions bypass
 the calculation factory because they do not construct mathematical requests.
 The CLI is the invoker; the session is the receiver. Commands return text and
 do not prompt or print.
+
+## Another source, the same calculation
+
+`csv stddev values.csv` follows reader → DataFrame → value Series → list →
+factory → calculation → calculate action → session → statistic → saved result.
+The reader owns file structure; shared validation owns finite numeric inputs;
+statistics owns minimum counts and `ddof`. Typed and CSV observations use the
+same policy. Reading occurs during preparation, before calculation execution.
+Sample deviation defaults to `ddof=1`; `ddof=0` explicitly requests population
+deviation. Both require at least two observations here.

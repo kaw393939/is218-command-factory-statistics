@@ -1,6 +1,6 @@
-# Vocabulary introduced through Part 4
+# Vocabulary introduced through Part 5
 
-[Branch home](../README.md) · [Part 4 lesson](lessons/04-commands.md)
+[Branch home](../README.md) · [Part 5 lesson](lessons/05-statistics-csv.md)
 
 Use each definition to explain an actual call, value, or state change.
 
@@ -65,5 +65,17 @@ Use each definition to explain an actual call, value, or state change.
 | Side effect | Change beyond returning a value, such as recording or clearing history |
 | Type hint | Expectation for readers/tools; not automatic runtime enforcement |
 | Fixture / monkeypatch / capsys | Test resource / temporary replacement / captured output |
+
+## Part 5: Statistics and sources
+
+| Term | Meaning here |
+| --- | --- |
+| DataFrame / Series | pandas table / one-dimensional collection or selected column |
+| Input adapter | Read a source's structure and supply values to shared math |
+| Observation | A value supplied to a statistic; missing values are errors here |
+| ddof | Setting for the deviation denominator n - ddof |
+| Sample / population deviation | Spread using n - 1 (ddof=1) / n (ddof=0) |
+| tmp_path | Temporary test directory for isolated input files |
+| Race condition | State can change between checking a file and acting on it |
 
 A shallow copy protects collection membership; it does not freeze contained objects. Static method binding is not a speed guarantee.

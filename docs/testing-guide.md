@@ -1,6 +1,6 @@
-# Retain behavior evidence through Part 4
+# Retain behavior evidence through Part 5
 
-[Branch home](../README.md) · [Part 4 lesson](lessons/04-commands.md)
+[Branch home](../README.md) · [Part 5 lesson](lessons/05-statistics-csv.md)
 
 You already know pytest and CI from the prerequisite. A changed public interface requires adapted calls, while its existing behavioral claims remain regression requirements.
 
@@ -22,6 +22,10 @@ Identify setup, action, and assertion. `pytest.approx` compares floating-point r
 | Sessions own independent history | [tests/test_history.py](../tests/test_history.py): `test_sessions_have_independent_history` |
 | An invalid request permits a later successful request | [tests/test_cli.py](../tests/test_cli.py): `test_recovers_after_invalid_input` |
 | EOF and Ctrl+C end the loop cleanly | [tests/test_cli.py](../tests/test_cli.py): `test_input_ends_cleanly` |
+| Statistics obey known results and observation rules | [tests/test_statistics.py](../tests/test_statistics.py): `test_known_sample / test_reject_invalid_values / test_reject_invalid_ddof` |
+| CSV and typed values share mathematical policy | [tests/test_csv.py](../tests/test_csv.py): `test_sources_share_calculation_policy` |
+| A missing observation is rejected, not discarded | [tests/test_csv.py](../tests/test_csv.py): `test_missing_observation_is_rejected` |
+| A failed source request permits later terminal work | [tests/test_cli.py](../tests/test_cli.py): `test_recovers_from_csv_failures` |
 
 ## Preserve the earlier contracts
 
@@ -33,6 +37,10 @@ For terminal recovery, `monkeypatch` supplies input and `capsys` captures
 output. Include invalid input followed by a valid request and exit. Check both
 the error and later result. A fake input running out is a test/protocol mismatch,
 not an expected user failure to conceal.
+
+Use `tmp_path` for test CSV files. Choose a dataset different from the supplied
+example, and include bad structure or a missing observation. Do not rewrite
+the repository's example file or silently discard bad data.
 
 ## Run from this branch's repository root
 

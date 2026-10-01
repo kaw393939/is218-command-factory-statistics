@@ -1,6 +1,6 @@
-# Retain behavior evidence through Part 5
+# Retain behavior evidence through Part 6
 
-[Branch home](../README.md) · [Part 5 lesson](lessons/05-statistics-csv.md)
+[Branch home](../README.md) · [Part 6 lesson](lessons/06-transfer.md)
 
 You already know pytest and CI from the prerequisite. A changed public interface requires adapted calls, while its existing behavioral claims remain regression requirements.
 
@@ -26,6 +26,8 @@ Identify setup, action, and assertion. `pytest.approx` compares floating-point r
 | CSV and typed values share mathematical policy | [tests/test_csv.py](../tests/test_csv.py): `test_sources_share_calculation_policy` |
 | A missing observation is rejected, not discarded | [tests/test_csv.py](../tests/test_csv.py): `test_missing_observation_is_rejected` |
 | A failed source request permits later terminal work | [tests/test_cli.py](../tests/test_cli.py): `test_recovers_from_csv_failures` |
+| A prepared sequence continues and records only success | [tests/test_sequence.py](../tests/test_sequence.py): `test_sequence_continues_after_failure_and_records_only_success` |
+| An empty sequence changes no state | [tests/test_sequence.py](../tests/test_sequence.py): `test_empty_sequence_changes_no_state` |
 
 ## Preserve the earlier contracts
 

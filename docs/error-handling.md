@@ -1,6 +1,6 @@
-# Locate failure through Part 5
+# Locate failure through Part 6
 
-[Branch home](../README.md) · [Part 5 lesson](lessons/05-statistics-csv.md)
+[Branch home](../README.md) · [Part 6 lesson](lessons/06-transfer.md)
 
 EAFP attempts an operation and handles expected failure. LBYL checks a precondition before attempting. Expect common success? Consider EAFP. Expect frequent rejection? Consider a cheap, reliable check. Failure frequency and correctness matter more than unpredictable ordering.
 
@@ -21,6 +21,8 @@ EAFP attempts an operation and handles expected failure. LBYL checks a precondit
 For divide 1 0, creation succeeds. During execution, the exception travels through the calculation, session, and action to the CLI. History.add and successful formatting are skipped. The CLI catches the expected error, reports it, and accepts another request.
 
 Checking file existence cannot guarantee later access or valid contents. Attempt the read and handle the documented failures. Missing observations must not silently disappear before the statistic runs.
+
+For execute_sequence, handle expected failure around each item, so later calculations run. Its inputs are already prepared: handling raw-request construction failures requires moving that work inside the caller's per-item boundary too.
 
 Catch specific expected exceptions; a broad catch can hide programming defects. Checks and exception handling both consume processor work and memory. Neither a dictionary nor removing Python if statements establishes faster execution. Measure equivalent workloads if performance matters.
 

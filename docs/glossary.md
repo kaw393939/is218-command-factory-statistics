@@ -1,6 +1,6 @@
-# Vocabulary introduced through Part 5
+# Vocabulary introduced through Part 6
 
-[Branch home](../README.md) · [Part 5 lesson](lessons/05-statistics-csv.md)
+[Branch home](../README.md) · [Part 6 lesson](lessons/06-transfer.md)
 
 Use each definition to explain an actual call, value, or state change.
 
@@ -77,5 +77,14 @@ Use each definition to explain an actual call, value, or state change.
 | Sample / population deviation | Spread using n - 1 (ddof=1) / n (ddof=0) |
 | tmp_path | Temporary test directory for isolated input files |
 | Race condition | State can change between checking a file and acting on it |
+
+## Part 6: Evidence and adaptation
+
+| Term | Meaning here |
+| --- | --- |
+| Prepared sequence | Calculation objects supplied before item-by-item execution |
+| Recovery boundary | Specific handler around the work allowed to fail independently |
+| Transfer | Adapt understood responsibilities to a different published requirement |
+| Coverage | Measurement of executed code, not proof of correct assertions |
 
 A shallow copy protects collection membership; it does not freeze contained objects. Static method binding is not a speed guarantee.

@@ -1,6 +1,6 @@
-# Follow the program through Part 5
+# Follow the program through Part 6
 
-[Branch home](../README.md) · [Part 5 lesson](lessons/05-statistics-csv.md)
+[Branch home](../README.md) · [Part 6 lesson](lessons/06-transfer.md)
 
 Read this alongside the current code. Label stored state, calls, returned values, and statements skipped after failure.
 
@@ -19,6 +19,7 @@ Read this alongside the current code. Label stored state, calls, returned values
 | [cli.py](../calculator/cli.py) | Prepare actions, invoke execute(), print, and recover from expected errors |
 | [statistics.py](../calculator/statistics.py) | Apply the observation/count/deviation policy using pandas |
 | [inputs.py](../calculator/inputs.py) | Read the value column from CSV without performing math |
+| [sequence.py](../calculator/sequence.py) | Execute already prepared calculations independently; collect results and errors |
 
 ## Trace one successful request
 
@@ -73,3 +74,16 @@ statistics owns minimum counts and `ddof`. Typed and CSV observations use the
 same policy. Reading occurs during preparation, before calculation execution.
 Sample deviation defaults to `ddof=1`; `ddof=0` explicitly requests population
 deviation. Both require at least two observations here.
+
+## A caller processing prepared requests
+
+`execute_sequence(session, calculations)` receives calculation objects that
+already exist. For addition, zero division, and square, it returns successful
+results `[5.0, 9.0]` and one error message. History lengths progress from 0 to
+1, remain 1 after the failure, then become 2. Recovery sits inside the loop so
+later items run. Errors are returned separately; this helper does not add a
+failure collection to the session or parse raw input rows.
+
+An unknown operation can fail before a calculation exists. A caller accepting
+raw requests must put factory construction inside its per-item error boundary
+when the requirement is to continue after preparation failures too.

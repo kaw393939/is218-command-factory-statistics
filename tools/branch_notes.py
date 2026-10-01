@@ -199,7 +199,7 @@ def _testing(index):
     else:
         claims = [
             ("Binary and unary operations preserve their math contracts", "tests/test_operations.py", "test_arithmetic / test_unary_operations"),
-            ("A collection operation supports several values and rejects none", "tests/test_operations.py", "test_sum_accepts_a_collection"),
+            ("A collection operation supports several values and rejects empty input", "tests/test_operations.py", "test_sum_accepts_a_collection"),
             ("Construction defers execution and snapshots the values", "tests/test_calculation.py", "test_construction_defers_execution_and_snapshots_inputs"),
             ("Execution rejects a nonfinite result", "tests/test_calculation.py", "test_reject_nonfinite_result"),
             ("Factory selects behavior but does not execute it", "tests/test_factory.py", "test_factory_configures_calculation / test_factory_does_not_execute"),

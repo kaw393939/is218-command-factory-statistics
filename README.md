@@ -1,55 +1,72 @@
-# Learn design patterns by building a statistics calculator
+# Extend your OOP calculator: a six-part textbook
 
-You already built an OOP calculator. Now learn how to organize requests, separate responsibilities, and explain your code using a vocabulary that carries into other programs and languages.
+You have completed the [OOP calculator course](https://github.com/kaw393939/is218-oop-calculator): objects, an abstract calculation contract, encapsulated history, a CLI, tests, and CI. This sequel builds on that application to teach static operations, composition, a calculation factory, flexible inputs, application commands, and pandas data sources.
 
-The project is small: calculate **sample standard deviation** from typed values or a supplied CSV using pandas. The lessons make the design visible: **Command** represents the requests, a **Simple Factory** constructs them, and the CLI decides when to execute them.
+[Begin with the big picture](docs/big-picture.md) → [Prepare your sequel workspace](docs/setup.md) → [Part 1](docs/lessons/01-refactoring.md).
 
-## Begin with the question, not the code
+## The six parts
 
-[Start here: the big picture](docs/big-picture.md) → [Set up your own solution](docs/setup.md) → [Stage 1](docs/lessons/01-statistics.md).
+| Part | Main question | Worked reference |
+| --- | --- | --- |
+| [1. Refactor the calculator you already built](docs/lessons/01-refactoring.md) | How can a calculation store its behavior? | [Snapshot](examples/stages/01-refactoring/README.md) |
+| [2. Create calculations with a factory](docs/lessons/02-factory.md) | Who should select and construct the calculation? | [Snapshot](examples/stages/02-factory/README.md) |
+| [3. One, two, and many operands](docs/lessons/03-flexible-inputs.md) | What if an operation needs one, two, or many inputs? | [Snapshot](examples/stages/03-flexible-inputs/README.md) |
+| [4. Turn application actions into commands](docs/lessons/04-commands.md) | How can different application actions share a contract? | [Snapshot](examples/stages/04-commands/README.md) |
+| [5. Statistics and another input source](docs/lessons/05-statistics-csv.md) | Can different sources supply the same mathematical request? | [Snapshot](examples/stages/05-statistics-csv/README.md) |
+| [6. Integrate, explain, and adapt](docs/lessons/06-transfer.md) | Can we adapt the design to a changed requirement? | [Snapshot](examples/stages/06-transfer/README.md) |
 
-**main is the course home, not a runnable application.** All lesson readings are available here. The learn branches contain cumulative working snapshots. [Branch instructions](docs/branches.md) explain how to inspect references while building your own solution separately.
+Each part has small checkpoints: retrieve prior knowledge → predict → examine a worked example → complete a partial example → run and explain → adapt independently. Study across several sessions. Tests and error reasoning accompany every part; setup/CI are reviewed from your earlier work.
 
-## See what you will build
+The first two snapshots deliberately use two named operands. Part 3 changes the interface to *values/**options when unary, collection, and configured operations justify it. Read [migration](docs/migration.md) before combining code from different stages. Historical learn branches are previous-course references; these six snapshots live in one checkout.
+
+## Run the complete reference
+
+This checkout is complete worked code, not the timed starter. Build your own solution separately following [setup](docs/setup.md).
+
+```bash
+python -m pip install -r requirements.txt
+python -m calculator
+python -m pytest -q
+python tools/verify_course.py --full
+```
 
 ```text
-> manual
-Enter values separated by spaces: 10 20 30 40 50
-Standard deviation: 15.8114
-> csv
-Standard deviation: 15.8114
+> add 2 3
+Result: 5.0000
+> square 3
+Result: 9.0000
+> power 3 exponent=4
+Result: 81.0000
+> divide 1 0
+Error: float division by zero
+> stddev 10 20 30 40 50
+Result: 15.8114
+> csv mean values.csv
+Result: 30.0000
+> clear
+History cleared.
+> history
+History is empty.
 > exit
 Goodbye!
 ```
 
-## Your learning journey
+The factory constructs Calculations; application commands calculate, show history, clear, and help. History preserves the earlier project's controlled collection boundary. Math returns numbers; commands return display text; CLI prints it and handles expected failures.
 
-| Stage | Lesson | Worked reference |
-| --- | --- | --- |
-| 1 | [From two operands to a collection](docs/lessons/01-statistics.md) | [Cumulative code](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/01-statistics) |
-| 2 | [Turn a request into a Command](docs/lessons/02-command.md) | [Cumulative code](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/02-command) |
-| 3 | [Give a CSV request the same contract](docs/lessons/03-csv.md) | [Cumulative code](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/03-csv) |
-| 4 | [Move construction into a Simple Factory](docs/lessons/04-factory.md) | [Cumulative code](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/04-factory) |
-| 5 | [Make the CLI an invoker](docs/lessons/05-repl.md) | [Cumulative code](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/05-repl) |
-| 6 | [Publish, investigate, and explain your design](docs/lessons/06-ci.md) | [Cumulative code](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/06-ci) |
+## Read beside the code
 
-Each lesson starts with a problem, asks for predictions, introduces small coding checkpoints, explains unfamiliar tools, and ends with an independent exercise. Follow **predict → type → run → explain → change one thing**. This tutorial is preparation over multiple study sessions; the practice exam is a separate 90-minute attempt.
+[Architecture and request traces](docs/architecture.md) · [Python concepts](docs/concepts.md) · [EAFP/LBYL](docs/error-handling.md) · [Testing](docs/testing-guide.md) · [Glossary](docs/glossary.md) · [Reading guide](docs/reading-guide.md) · [Assignment](docs/assignment.md) · [Instructor guide](docs/instructor-guide.md).
 
-## Understand the wider design landscape
+The optional error-handling benchmark is an appendix experiment, not a rule that fewer conditionals guarantee faster code. A Simple Factory configures one product class here; it is not the inheritance-based Factory Method arrangement.
 
-- [Pattern categories and familiar features](docs/patterns-and-features.md): creation, structure, behavior, and examples beyond calculators.
-- [Architecture and request traces](docs/architecture.md): follow construction, execution, data conversion, and display.
-- [Guided Refactoring.Guru readings](docs/reading-guide.md): focused sections with questions and calculator mappings.
-- [Learning other languages](docs/language-transfer.md): transfer design understanding while learning syntax, libraries, and runtime rules.
+## Apply the ideas in assessments
 
-## Keep nearby as you work
+[Practice](https://github.com/kaw393939/is218-statistics-practice) adapts the design to calibration and a latest-result action. The real assessment uses a different request-processing workflow. Both are open-notes/code adaptations with supplied familiar infrastructure, meaningful student tests, and short design explanations. [Practice preparation](docs/practice-preparation.md) explains the policy and 60 automated +40 instructor-reviewed points.
 
-[Assignment criteria](docs/assignment.md) · [Testing guide](docs/testing-guide.md) · [Troubleshooting](docs/troubleshooting.md) · [Concepts](docs/concepts.md) · [Glossary](docs/glossary.md) · [Learning log](docs/learning-log.md) · [Instructor guide](docs/instructor-guide.md)
+For maintainers with local assessment checkouts:
 
-A short function-based solution could meet the feature requirements. We deliberately practice request objects and centralized construction so you can explain when they help and what complexity they add. You only implement Command and Simple Factory; the other patterns are recognition and transfer examples.
+```bash
+python tools/verify_assessments.py --mutations
+```
 
-## Rehearse after learning
-
-Read [practice preparation](docs/practice-preparation.md), then fork [the practice starter](https://github.com/kaw393939/is218-statistics-practice). It includes environment instructions and 100-point Actions feedback. Review its separate solution branch after your attempt.
-
-**The real test will not be exactly the same.** Expect a bounded change to the calculation or requirements. Learn to trace and adapt your design rather than memorize a particular answer.
+It verifies aligned APIs and rubrics, passing solutions, expected starter failure, and the limits of copying unchanged teaching or practice code into another assessment.

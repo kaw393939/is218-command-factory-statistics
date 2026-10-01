@@ -1,19 +1,26 @@
-# Keep a small learning log
+# Record a prediction, a change, and its evidence
 
-Create LEARNING_LOG.md in your solution repository. After each checkpoint write three to five sentences using this structure:
+Keep a short entry for each checkpoint. The prerequisite already gave you a working design; record what each new requirement changes rather than describing every class as new.
 
-```text
-Stage/checkpoint:
-My prediction:
-What happened when I ran it:
-Why that happened:
-Responsibility introduced or moved:
-A change I tested independently:
-A question I still have:
-```
+| Prompt | Useful evidence |
+| --- | --- |
+| What do I already know here? | Earlier class/method/test that supplies the starting point |
+| What do I predict? | Inputs, returned value/type, exception, or state before running |
+| What happened? | Exact call or request and observed behavior |
+| What assumption changed? | Explanation of the mismatch, if any |
+| How does control move? | Values, calls, returns, ownership, and skipped statements |
+| Why introduce this component? | Requirement it serves and extra complexity it adds |
+| What stays valid? | Earlier behavior and regression assertion retained |
+| What would a changed requirement affect? | First component to inspect and why |
+| What do my tests establish? | Assertion and one relevant case still unverified |
 
-After the Command lesson, replace vague phrases such as “the class does it” with a trace: “The caller creates a ManualStdDevCommand with values. Later execute() delegates to standard_deviation().”
+## Retrieval prompts across the six parts
 
-After the factory lesson, explain which code chooses the concrete type. After the CSV lesson, state when the file is read. After the CI lesson, record the commit you checked and the useful evidence from the run.
+1. Compare a previous calculation subclass with a stored operation. Explain callable versus call.
+2. Trace factory creation without performing math. Identify its returned object.
+3. Expand one `*values` and one `**options` call by hand. Explain operand versus setting.
+4. Trace a history action and a failed calculation. Explain why state differs.
+5. Follow a CSV column into the same statistic as typed values. Name the missing-value policy.
+6. Explain one adaptation without looking at the worked solution. Record the submitted commit and the checks for that revision.
 
-When a prediction is wrong, retain it and explain the correction. The log records understanding, not just successful commands.
+A log saying only “tests passed” omits the claim. Write what the test established and how it would detect a plausible bug. Keep entries brief enough to revisit while studying.

@@ -1,39 +1,32 @@
-# Work through branches without losing your solution
+# Navigate six cumulative references
 
-main is the course home and contains all lesson readings. Each learn branch is a complete cumulative application snapshot. You do not combine branch folders. You build one solution in a separate folder and consult the matching snapshot when needed.
+The current course keeps six worked snapshots inside `examples/stages` in one checkout. No reference branch switching is required. Extend your own completed prerequisite solution separately; these folders contain finished examples.
 
-| Branch | New responsibility | Reference test cases |
-| --- | --- | ---: |
-| learn/01-statistics | Shared validation and calculation | 8 |
-| learn/02-command | Manual request object | 11 |
-| learn/03-csv | File request object | 14 |
-| learn/04-factory | Central construction choice | 18 |
-| learn/05-repl | Interactive invocation and recovery | 22 |
-| learn/06-ci | CI and design reflection | 22 |
+| Part folder | Change from the preceding checkpoint |
+| --- | --- |
+| [01-refactoring](../examples/stages/01-refactoring/README.md) | Static math and a composed two-operand calculation; retain encapsulated history |
+| [02-factory](../examples/stages/02-factory/README.md) | A name-to-operation calculation factory, still with two operands |
+| [03-flexible-inputs](../examples/stages/03-flexible-inputs/README.md) | Unary/collection operations and positional/named argument forwarding |
+| [04-commands](../examples/stages/04-commands/README.md) | Session actions and commands; reuse familiar abstraction and CLI concepts |
+| [05-statistics-csv](../examples/stages/05-statistics-csv/README.md) | pandas statistics and a CSV observation source |
+| [06-transfer](../examples/stages/06-transfer/README.md) | Prepared-sequence execution, transfer evidence, and CI review |
 
-Counts include parametrized cases. Your independent exercises may add tests; an exact count is not your grading target.
-
-## At each stage
-
-1. Open the lesson and write your predictions in a learning log.
-2. Create/change only the files listed in its change table.
-3. Run each small checkpoint before completing the final snapshot.
-4. Compare your files with the worked branch if you are stuck.
-5. Run earlier tests too; a new feature must preserve their behavior.
-6. Explain the design, complete an independent exercise, and commit in your solution repository.
-
-Use `git switch learn/02-command` only inside statistics-reference to inspect the next snapshot. A virtual environment is an ignored local folder, so switching branches does not rebuild it; reinstall requirements if they change. If Git refuses to switch because you changed tracked files, inspect `git diff` and save the experiment on your own branch before switching. Do not discard work just to follow a reading link.
-
-## Compare neighboring stages
-
-GitHub Compare shows the application changes between two stage branches. Documentation may also differ; focus first on calculator/ and tests/.
+From the teaching repository root, inspect a reference:
 
 ```bash
-git diff learn/02-command..learn/03-csv -- calculator tests
+cd examples/stages/02-factory
+python -m calculator
+python -m pytest -q
 ```
 
-The two dots compare the branch tips. This is a reading command inside the reference checkout, not an instruction to overwrite your solution.
+Use the already activated reference environment. Run tests from the snapshot root. Implement the lesson in your own solution, retaining earlier regressions; do not copy a whole snapshot over your project.
 
-## Tutorial versus assessment
+Parts contain smaller conceptual checkpoints even though there are only six main folders. The lesson explains what changed and why before linking the complete reference. Compare adjacent files and predict which existing behaviors should stay valid.
 
-The tutorial branches contain worked examples. The practice repository main branch contains TODO skeletons and acceptance tests. Its solution branch is for review after your timed attempt. The real test will vary a bounded requirement; exact requirements are provided with the test.
+## Historical branches
+
+The earlier `learn/01-statistics` through `learn/06-ci` branches in this repository describe the former statistics/command-factory curriculum. They remain historical references and do not match the revised APIs or assessments. The completed OOP calculator's own `learn/...` branches belong to that separate prerequisite course.
+
+Use the current six snapshots and lesson names together. If an old link points to `01-operations`, `02-calculations`, `03-factory`, or `06-ci`, follow [the migration guide](migration.md) to the current progression. Do not combine old starter tests with a new contract.
+
+Maintainers regenerate snapshots with `python tools/build_stages.py` and verify with `python tools/verify_course.py --full`. These utilities keep course references consistent; students demonstrate their own solution with application tests and CI.

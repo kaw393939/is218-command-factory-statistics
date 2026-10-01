@@ -1,63 +1,44 @@
-# Use design vocabulary to learn another language
+# Transfer relationships before syntax
 
-When you read code in an unfamiliar language, start with relationships: what does this object represent, what can callers ask it to do, what state does it hold, and when does execution happen?
+The prerequisite used an inheritance relationship: `Add` IS A `Calculation`. This course also uses composition: a calculation HAS an operation callable and a session HAS a history. Those relationships can transfer even when another language expresses them differently.
 
-Patterns give you a useful hypothesis. Verify it against the code rather than trusting class names.
+| Design idea | Python here | Question in another language |
+| --- | --- | --- |
+| Stateless operation | `@staticmethod` | Static method, module function, or package function? |
+| Configurable calculation | Stored tuple and callable | Function pointer, delegate, closure, or strategy object? |
+| Creation helper | `CalculationFactory.create()` | Factory function or static helper? |
+| Flexible operands/settings | `*values`, `**options` | Sequence parameter, variadic arguments, or explicit options object? |
+| Action contract | ABC with `execute() -> str` | Interface, abstract class, or structural contract? |
+| Encapsulated history | Private-by-convention list; shallow read copy | Which access, ownership, and copying rules apply? |
+| Expected failure | Exceptions handled by a capable caller | Exceptions or explicit error result? |
 
-## One design, different language mechanisms
+Patterns describe relationships. They do not automatically transfer numeric-library defaults, argument syntax, package tools, memory ownership, or runtime type enforcement.
 
-| Design idea | Python here | Java / C# questions | TypeScript / Go questions |
-| --- | --- | --- | --- |
-| Execution contract | ABC with abstract execute() | Interface or abstract base class? What return type and visibility? | Interface? Structural typing or implicit satisfaction? |
-| Stored request | self.values / self.path | Fields, constructors, mutability rules? | Object properties or struct fields? |
-| Concrete behavior | Subclass overrides execute() | implements / extends or corresponding C# declaration? | Class method or method on a concrete type? |
-| Uniform caller | command.execute() | How is the contract type referenced? | How is interface satisfaction checked? |
-| Creation helper | Static create() selects a command | Static method or supplied factory object? | Factory function or method? |
-| Expected failure | Raised exceptions | Which exception conventions apply? | Thrown exceptions or returned errors? |
-
-These are investigation questions, not promises that every language uses the same inheritance structure. Dynamic typing, structural typing, and explicit interfaces can all support a common behavioral contract.
-
-## Compare tiny interfaces
-
-These snippets show the contract only; they are not complete applications.
+## Compare a familiar contract
 
 ```python
 from abc import ABC, abstractmethod
 
 class Command(ABC):
     @abstractmethod
-    def execute(self) -> float:
+    def execute(self) -> str:
         pass
 ```
 
 ```java
 interface Command {
-    double execute();
+    String execute();
 }
 ```
 
 ```typescript
 interface Command {
-    execute(): number;
+    execute(): string;
 }
 ```
 
-The shared meaning is “a caller can ask this request to execute and receive a numeric result.” Python's annotation does not enforce the return type at runtime. Java and TypeScript use different checking rules, and TypeScript's types do not remain runtime validation after compilation. You still need to learn the target language's actual behavior.
+These examples express a common capability, but their checking and runtime rules differ. Python's annotation alone does not prevent a method from returning a number. Consult the language's official documentation rather than assuming syntax and enforcement are identical.
 
-## What patterns cannot teach you automatically
+Transfer task: choose a language and plan a calculation factory plus an action that reads successful history. Identify where conversion, state, and error handling belong. Label the relationships you already know separately from language rules you verify. Do not add a whole application before the smaller contract is clear.
 
-You still need syntax, standard libraries, package installation, testing tools, runtime error rules, memory/ownership rules where relevant, and numeric/data-processing libraries. A Java Command cannot call pandas just because the design resembles the Python version.
-
-Use official language documentation to answer those questions. Start with [Python classes](https://docs.python.org/3/tutorial/classes.html), [Java interfaces](https://dev.java/learn/interfaces/), [C# interfaces](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/interfaces), [TypeScript interfaces](https://www.typescriptlang.org/docs/handbook/interfaces.html), or [Go interfaces](https://go.dev/tour/methods/9).
-
-## Transfer exercise
-
-Choose one language you have not used much. Find its official documentation and write a short plan, not a whole port:
-
-1. Express an execution contract.
-2. Store a request's values.
-3. Select a concrete request using a creation helper.
-4. Explain how the caller receives errors.
-5. Identify a numeric library or calculation approach to investigate.
-
-Label which design ideas you already understand and which language facts you verified. Your goal is a disciplined learning method, not memorizing translations of Python keywords.
+[Java interfaces](https://dev.java/learn/interfaces/) · [C# interfaces](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/interfaces) · [TypeScript interfaces](https://www.typescriptlang.org/docs/handbook/interfaces.html) · [Go interfaces](https://go.dev/tour/methods/9)

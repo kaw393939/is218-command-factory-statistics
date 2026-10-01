@@ -1,18 +1,30 @@
-# Troubleshoot by locating the responsibility
+# Diagnose the boundary before changing code
 
-| Symptom | Likely area | Evidence to inspect |
+Record the exact command, working folder, interpreter, expected result, and traceback. Read the last exception first, then follow the relevant calls. Use [architecture](architecture.md) to separate selection, construction, execution, recording, and display.
+
+| Symptom | Inspect | Next step |
 | --- | --- | --- |
-| Import fails before a test runs | Setup / package structure | Interpreter, working folder, spelling, __init__.py |
-| Sample answer is about 14.1421 for 10–50 | Statistical policy | ddof: population uses 0; tutorial requires 1 |
-| CSV and manual disagree for identical values | Source preparation / shared policy | Header, selected values, missing cells, duplicated math |
-| Blank values disappear | Parsing / validation | read_csv skips blank lines; quoted empty cells become missing values |
-| Factory returns a number | Creation/execution boundary | Return the command, not command.execute() |
-| Command object printed instead of result | Invoker | Call execute() before formatting |
-| Invalid request ends the program | CLI recovery | Exceptions handled around prompts, factory, and execution |
-| Tests raise StopIteration | Fake input or unexpected loop behavior | Number/order of input() calls |
-| CI fails but local tests pass | Environment or submitted files | Dependencies, case-sensitive filenames, committed files, Python version |
-| Starter's Actions run is red | Incomplete practice implementation | Score summary; red is expected below full rubric points |
+| No module named pandas/pytest | Active interpreter | Install requirements using that interpreter's `-m pip` |
+| No module named calculator | Current directory | Run from your solution or a snapshot root |
+| Entry point shows an earlier demonstration | Part/checkpoint | Parts 1–3 demonstrate math; Part 4 introduces the interactive loop |
+| Old tests import `Add`/`Subtract` after refactoring | Intentional API change | Preserve their behavior claim through static operations/composed calculation |
+| `CommandFactory` import fails | Which curriculum the code came from | Use current `CalculationFactory`; consult migration |
+| Cannot instantiate an abstract class | Missing required method | Implement the concrete command's `execute()`; compare the earlier ABC lesson |
+| A float object is not callable | Stored operation | Save `Operations.add`, not `Operations.add(2, 3)` |
+| Wrong number of positional arguments | Collection/unpacking and arity | Expand `*values` by hand; distinguish one tuple from several operands |
+| Power uses default despite supplied setting | Option path | Trace collection, copied mapping, and `**options` forwarding |
+| Negative square root fails | Mathematical domain | Expected real-domain failure belongs to execution, not an unknown-name handler |
+| Clearing a read list does not clear history | Encapsulation | Call session/history `clear()` to change owned state |
+| Failed calculation appears in history | Statement order | Compute successfully before recording |
+| History display runs math again | Saved result | Format the entry's stored result rather than calling `get_result()` |
+| Sample/population answers differ | `ddof` and published policy | Sample uses 1; population uses 0; do not infer an exam contract from old notes |
+| Missing CSV | Current directory/path argument | Use a path relative to the caller's directory or an appropriate absolute path |
+| CSV observations silently disappear | Reader and validation | Reject missing observations before aggregation |
+| Fake terminal input runs out | Number/protocol of `input()` calls | Match the test's answers to the current single-line grammar |
+| Later sequence item never executes | Location of recovery handler | Recover per item when the contract requires continuation |
+| Unexpected traceback disappears | Broad catch | Restore specific expected handlers and fix the exposed bug |
+| Automated assessment score is below total rubric | Which portion was measured | Automated behavior is 60 points; student tests and explanations need review |
 
-A missing CSV line and a missing CSV cell are not the same. By default read_csv ignores completely blank lines. An empty quoted cell is parsed as missing and this application's function rejects it. Do not describe the default parser as counting every physical line as an observation.
+After fixing the cause, rerun the focused test and the accumulated suite. Do not alter a requirement or catch every exception merely to make a traceback disappear.
 
-When asking for help, provide the command you ran, the first useful error, your current branch/checkpoint, and the behavior you expected. Never paste credentials.
+[Setup](setup.md) · [API migration](migration.md) · [Test evidence](testing-guide.md)

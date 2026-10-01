@@ -1,84 +1,89 @@
-"""Check links, complete-file excerpts, and optionally all six worked snapshots."""
+"""Verify local links, executable examples, snapshot freshness, and stage behavior."""
 import argparse
 import ast
-import io
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
-import tarfile
 import tempfile
-
-ROOT = Path(__file__).resolve().parents[1]
-STAGES = ["01-statistics", "02-command", "03-csv", "04-factory", "05-repl", "06-ci"]
-
-
-def git(*args):
-    return subprocess.check_output(["git", *args], cwd=ROOT, text=True)
-
-
-def resolve(branch):
-    for ref in (branch, "origin/" + branch):
-        if subprocess.run(["git", "rev-parse", "--verify", ref], cwd=ROOT, capture_output=True).returncode == 0:
-            return ref
-    raise RuntimeError(f"Missing {branch}; fetch all branches before verifying")
+from build_stages import ROOT, STAGES
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--full", action="store_true", help="also run every worked stage in an isolated temporary folder")
+    parser.add_argument('--full', action='store_true', help='run all six standalone snapshot suites and demos')
     args = parser.parse_args()
     errors = []
     excerpts = 0
-    for path in [ROOT / "README.md", *sorted((ROOT / "docs").rglob("*.md"))]:
+    for path in [ROOT / 'README.md', *sorted((ROOT / 'docs').rglob('*.md')),
+                 *sorted((ROOT / 'examples/stages').glob('*/README.md'))]:
         content = path.read_text()
-        prose = re.sub(r"```[^\n]*\n.*?```", "", content, flags=re.S)
-        for target in re.findall(r"\[[^\]]+\]\(([^)]+)\)", prose):
-            if re.match(r"[a-zA-Z]+:", target) or target.startswith("#"):
+        prose = re.sub(r'```[^\n]*\n.*?```', '', content, flags=re.S)
+        for target in re.findall(r'\[[^\]]+\]\(([^)]+)\)', prose):
+            if re.match(r'[a-zA-Z]+:', target) or target.startswith('#'):
                 continue
-            local = (path.parent / target.split("#", 1)[0]).resolve()
-            if not local.exists():
-                errors.append(f"{path.relative_to(ROOT)}: missing relative link {target}")
-        for branch, filename, snippet in re.findall(r"<!-- reference: ([^:]+):([^ ]+) -->\n```[^\n]*\n(.*?)\n```", content, flags=re.S):
-            expected = git("show", resolve(branch) + ":" + filename).rstrip()
-            if snippet.rstrip() != expected:
-                errors.append(f"{path.relative_to(ROOT)}: excerpt differs from {branch}:{filename}")
+            if not (path.parent / target.split('#', 1)[0]).exists():
+                errors.append(f'{path.relative_to(ROOT)}: missing link {target}')
+        for filename, snippet in re.findall(r'<!-- reference: ([^ ]+) -->\n```python\n(.*?)\n```', content, flags=re.S):
+            source = ROOT / filename
+            if not source.exists() or snippet.rstrip() != source.read_text().rstrip():
+                errors.append(f'{path.relative_to(ROOT)}: stale excerpt from {filename}')
             excerpts += 1
-        for snippet in re.findall(r"```python\n(.*?)\n```", content, flags=re.S):
+        for snippet in re.findall(r'```python\n(.*?)\n```', content, flags=re.S):
             try:
                 ast.parse(snippet)
             except SyntaxError as error:
-                errors.append(f"{path.relative_to(ROOT)}: invalid Python snippet: {error}")
+                errors.append(f'{path.relative_to(ROOT)}: invalid example: {error}')
+    check = subprocess.run([sys.executable, str(ROOT / 'tools/build_stages.py'), '--check'], capture_output=True, text=True)
+    if check.returncode:
+        errors.append(check.stdout + check.stderr)
     if errors:
-        print("\n".join(errors))
+        print('\n'.join(errors))
         return 1
-    print(f"Documentation links and {excerpts} complete-file excerpts verified; Python examples parse.")
+    print(f'Documentation links, {excerpts} complete-file excerpts, Python examples, and snapshot freshness verified.')
     if args.full:
-        for index, stage in enumerate(STAGES, start=1):
-            ref = resolve("learn/" + stage)
+        for index, stage in enumerate(STAGES, 1):
             with tempfile.TemporaryDirectory() as directory:
-                archive = subprocess.check_output(["git", "archive", ref], cwd=ROOT)
-                with tarfile.open(fileobj=io.BytesIO(archive)) as files:
-                    # Only instructor-owned, tracked course snapshots are extracted.
-                    files.extractall(directory, filter="data")
+                shutil.copytree(ROOT / 'examples/stages' / stage, directory, dirs_exist_ok=True,
+                                ignore=shutil.ignore_patterns('__pycache__', '.pytest_cache'))
                 env = os.environ.copy()
-                env["PYTHONPATH"] = directory
-                tests = subprocess.run([sys.executable, "-m", "pytest", "-q"], cwd=directory, env=env, text=True, capture_output=True, timeout=90)
+                env['PYTHONPATH'] = directory
+                env['PYTEST_DISABLE_PLUGIN_AUTOLOAD'] = '1'
+                tests = subprocess.run([sys.executable, '-m', 'pytest', '-q'], cwd=directory, env=env,
+                                       text=True, capture_output=True, timeout=90)
                 if tests.returncode:
                     print(tests.stdout + tests.stderr)
                     return 1
-                inputs = "manual\n10 20 30 40 50\ncsv\nexit\n" if index >= 5 else ""
-                demo = subprocess.run([sys.executable, "-m", "calculator"], input=inputs, cwd=directory, env=env, text=True, capture_output=True, timeout=15)
-                if demo.returncode or (index >= 5 and demo.stdout.count("Standard deviation: 15.8114") != 2):
-                    print(f"{ref}: demonstration failed\n{demo.stdout}\n{demo.stderr}")
+                requests = 'add 2 3\nsquare 3\npower 3 exponent=4\ndivide 1 0\nhistory\nclear\nhistory\nexit\n'
+                if index >= 5:
+                    requests = requests.replace('exit\n', 'stddev 10 20 30 40 50\ncsv stddev values.csv\nexit\n')
+                demo = subprocess.run([sys.executable, '-m', 'calculator'], input=requests if index >= 4 else '',
+                                      cwd=directory, env=env, capture_output=True, text=True, timeout=15)
+                valid = demo.returncode == 0
+                if index < 3:
+                    valid = valid and demo.stdout.strip() == '5.0'
+                elif index == 3:
+                    valid = valid and demo.stdout.strip().splitlines() == ['5.0', '81.0']
+                else:
+                    valid = valid and all(text in demo.stdout for text in
+                        ('Result: 5.0000', 'Result: 9.0000', 'Result: 81.0000', 'Error:', 'History cleared.', 'History is empty.', 'Goodbye!'))
+                    if index >= 5:
+                        valid = valid and demo.stdout.count('Result: 15.8114') == 2
+                if not valid:
+                    print(f'{stage}: demo failed\n{demo.stdout}\n{demo.stderr}')
                     return 1
-                if index < 5 and abs(float(demo.stdout.strip()) - 15.811388300841896) > 1e-9:
-                    print(f"{ref}: unexpected demonstration result {demo.stdout}")
-                    return 1
-                print(f"{stage}: {tests.stdout.strip().splitlines()[-1]}; demonstration verified")
+                if index == 4:
+                    scope = subprocess.run([sys.executable, '-c',
+                        'from calculator.commands import HelpCommand; text=HelpCommand().execute(); assert "csv" not in text and "stddev" not in text'],
+                        cwd=directory, env=env, capture_output=True, text=True)
+                    if scope.returncode:
+                        print(f'{stage}: help describes features before they are introduced.\n{scope.stderr}')
+                        return 1
+                print(f'{stage}: tests, demonstration, and stage scope verified.')
     return 0
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     raise SystemExit(main())

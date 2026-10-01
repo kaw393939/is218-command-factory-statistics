@@ -1,63 +1,97 @@
-# Learn what a test actually claims
+# Retain behavior evidence while changing the design
 
-A passing test supports a particular claim under its tested conditions. It does not prove every possible input works or establish that your design is sensible.
+The prerequisite already introduced pytest, fixtures, meaningful assertions, coverage, and CI. Use them throughout this course. When a public interface intentionally changes, adapt the relevant test and retain the behavior it was checking.
 
-## Start with one known result
-
-```python
-assert standard_deviation([2, 4, 6]) == pytest.approx(2.0)
-```
-
-The claim is about the sample deviation of these values. pytest.approx allows small floating-point differences; it does not excuse a different mathematical policy. [Pytest approximate comparisons](https://docs.pytest.org/en/stable/reference/reference.html#pytest-approx)
-
-## Check a promised failure
+A test has setup, an action, and an assertion. State the claim in its name, then use values that would distinguish the intended behavior from a plausible bug.
 
 ```python
-with pytest.raises(ValueError):
-    standard_deviation([2])
+import pytest
+from calculator.operations import Operations
+
+
+def test_divide_returns_fraction():
+    result = Operations.divide(7, 2)
+    assert result == pytest.approx(3.5)
+
+
+def test_divide_rejects_zero():
+    with pytest.raises(ZeroDivisionError):
+        Operations.divide(7, 0)
 ```
 
-The block passes only if the promised error occurs. Printing an error while returning an incorrect value does not satisfy that function contract. The CLI later catches the exception and chooses how to display it.
+`pytest.approx` handles floating-point differences. `pytest.raises` fails if the expected exception is absent or a different type is raised. First explain one case; then use parametrization when several cases test the same behavior. More rows alone do not establish a stronger claim.
 
-## Use fixtures when a real dependency needs controlled setup
+## Match each part to a behavioral claim
 
-| Tool | Purpose | What our tests control |
-| --- | --- | --- |
-| tmp_path | A fresh temporary pathlib.Path for each test | A CSV independent of a user's file |
-| monkeypatch.chdir(path) | Temporarily change working directory | Where a default values.csv is found |
-| monkeypatch.setattr(...) | Temporarily replace a dependency | What input() returns |
-| capsys | Capture printed output | Result and recovery messages |
-| pytest.mark.parametrize | Repeat one test for multiple cases | Invalid values or termination signals |
+| Part/component | Evidence that distinguishes correct behavior |
+| --- | --- |
+| 1: static operations | Math works without an `Operations` instance or terminal input |
+| 1: composed calculation | Constructor stores a callable; an operation spy has not been called yet |
+| 1–4: history | Different owners have independent entries; clearing a returned read list cannot clear owned state |
+| 2: factory | Name selects the intended operation and returns a calculation without executing it |
+| 3: flexible inputs | Unary/binary counts differ; values and named settings are forwarded correctly |
+| 3: snapshots | Caller mutation of the original list/options does not alter stored inputs |
+| 4: session/actions | Success records a saved result; failure records nothing; display does not recalculate |
+| 5: statistics | Known sample/population results and count/missing/nonfinite policies |
+| 5: CSV | Valid observations reach shared math; structural/numeric failures remain visible |
+| 4–6: recovery | A failed request/item followed by a valid one still permits the valid result |
 
-Pytest supplies a fixture when you name it as a test argument and restores its changes afterward. You do not call tmp_path() or create monkeypatch yourself. Read [temporary paths](https://docs.pytest.org/en/stable/how-to/tmp_path.html), [monkeypatch](https://docs.pytest.org/en/stable/how-to/monkeypatch.html), and [capturing output](https://docs.pytest.org/en/stable/how-to/capture-stdout-stderr.html) as each tool appears.
+A spy is a small callable recording its calls. It tests timing or delegation through observable behavior, rather than matching source formatting. For deferred execution, assert no calls immediately after construction, then assert one call and its arguments after `get_result()`.
 
-## Unpack a fake input stream
+A history test should read through `get_history()`, not `_entries` or `_history`. If the test clears the returned list, then another read should still contain the saved entry. This proves collection protection; it does not prove contained objects are deeply immutable.
+
+## Reuse your familiar test resources
+
+`tmp_path` supplies a temporary location for a CSV. `monkeypatch` temporarily replaces a collaborator or changes environment state. `capsys` captures printed output. Use a named fake input before compressing it into a lambda:
 
 ```python
-answers = iter(["manual", "2 4 6", "exit"])
+from calculator.cli import run
 
-def fake_input(prompt):
-    return next(answers)
 
-monkeypatch.setattr("builtins.input", fake_input)
+def test_terminal_recovers_after_division_failure(monkeypatch, capsys):
+    answers = iter(["divide 1 0", "add 2 3", "exit"])
+
+    def fake_input(prompt):
+        return next(answers)
+
+    monkeypatch.setattr("builtins.input", fake_input)
+    run()
+    output = capsys.readouterr().out
+    assert "Error:" in output
+    assert "Result: 5.0000" in output
+    assert "Goodbye!" in output
 ```
 
-iter() produces an iterator; next() consumes one answer per call. The prompt parameter keeps the same calling shape as input(). A lambda in the reference is the shorter equivalent of this fake_input function. If the list runs out, next() raises StopIteration; that usually means your test supplied too few responses or your loop asked an unexpected question.
+Each call to `input()` consumes an answer. Exhausting the fake unexpectedly raises `StopIteration`, generally exposing a mismatch with the interaction protocol. Do not hide it as an expected user error.
 
-Keep the test focused: assert a successful result after invalid input, not only that an error printed. Recovery is a separate behavior.
+For CSV, create the file inside `tmp_path` rather than modifying the supplied example. Test a different dataset from the README's demonstration. Compare typed and CSV results under the same option, and include one missing observation that must not be silently discarded.
 
-## Diagnose a failure before editing code
+## Select tests that detect likely errors
 
-1. Identify the first failing test and its input.
-2. State the expected behavior from the requirement.
-3. Compare expected and actual values or exceptions.
-4. Decide whether the application or the assertion is wrong.
-5. Run just that test, then run the full suite after the fix.
+| Plausible mistake | Discriminating case |
+| --- | --- |
+| Subtraction implemented as addition | Unequal nonzero operands with a negative expected difference |
+| Factory executes during construction | A spy, or construct division by zero without yet asking for a result |
+| Options stored but not forwarded | Power with a nondefault exponent |
+| Every operation treated as binary | Successful square root plus an extra-operand rejection |
+| Session records before execution | Fail division and inspect empty successful history |
+| History recomputes results | A callable whose next call would fail; display must use the saved result |
+| Population/sample policy mixed | `[2, 4, 6]` produces distinct deviations |
+| Sequence stops after one failure | Valid, invalid, valid prepared calculations, with two successful results |
+
+In Part 6, tests for a prepared sequence should establish both continued execution and successful-only history. Tests for an assessment adaptation should target the new contract rather than repeating an unchanged course test.
+
+## Diagnose before broadening checks
+
+Read the failed assertion and its inputs. Determine whether the expectation or implementation disagrees with the published contract. Fix that cause, rerun the focused test, then run the accumulated suite.
 
 ```bash
-python -m pytest tests/test_statistics.py -q
-python -m pytest -k constant -q
-python -m pytest
+python -m pytest tests/test_operations.py -q
+python -m pytest -q
 ```
 
-Do not change an expectation merely to make the check green. Do not exclude failing application code from checks. This course uses meaningful behavior tests without a 100% coverage gate.
+Coverage measures which lines/branches ran, not whether the assertions explain correctness. The teaching extension does not add a new exact coverage requirement; retain the prerequisite's setup when useful. Assessments have their own published rubric and do not award student-test credit solely for test count or coverage percentage.
+
+Course maintainers also run `python tools/verify_course.py --full` to check documentation and snapshots. Students need not implement that utility. A green CI run verifies its checked revision; inspect the run corresponding to your submitted commit.
+
+[pytest fixtures](https://docs.pytest.org/en/stable/how-to/fixtures.html) · [monkeypatch](https://docs.pytest.org/en/stable/how-to/monkeypatch.html) · [approx](https://docs.pytest.org/en/stable/reference/reference.html#pytest-approx)

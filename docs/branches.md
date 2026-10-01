@@ -1,32 +1,72 @@
-# Navigate six cumulative references
+# Follow six cumulative learning branches
 
-The current course keeps six worked snapshots inside `examples/stages` in one checkout. No reference branch switching is required. Extend your own completed prerequisite solution separately; these folders contain finished examples.
+`main` is the course entry point and full textbook. The worked programs live on six ordered `learn/...` branches. Each has its own README, stage-relevant lesson material, application code, and tests at the repository root. Extend your completed prerequisite solution in a separate project while using these branches as references.
 
-| Part folder | Change from the preceding checkpoint |
+| Branch | Change from the preceding checkpoint |
 | --- | --- |
-| [01-refactoring](../examples/stages/01-refactoring/README.md) | Static math and a composed two-operand calculation; retain encapsulated history |
-| [02-factory](../examples/stages/02-factory/README.md) | A name-to-operation calculation factory, still with two operands |
-| [03-flexible-inputs](../examples/stages/03-flexible-inputs/README.md) | Unary/collection operations and positional/named argument forwarding |
-| [04-commands](../examples/stages/04-commands/README.md) | Session actions and commands; reuse familiar abstraction and CLI concepts |
-| [05-statistics-csv](../examples/stages/05-statistics-csv/README.md) | pandas statistics and a CSV observation source |
-| [06-transfer](../examples/stages/06-transfer/README.md) | Prepared-sequence execution, transfer evidence, and CI review |
+| [learn/01-refactoring](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/01-refactoring) | Static math and a composed two-operand calculation; retain encapsulated history |
+| [learn/02-factory](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/02-factory) | A name-to-operation calculation factory, still with two operands |
+| [learn/03-flexible-inputs](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/03-flexible-inputs) | Unary/collection operations and positional/named argument forwarding |
+| [learn/04-commands](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/04-commands) | Session actions and commands; reuse familiar abstraction and CLI concepts |
+| [learn/05-statistics-csv](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/05-statistics-csv) | pandas statistics and a CSV observation source |
+| [learn/06-transfer](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/06-transfer) | Prepared-sequence execution, transfer evidence, and CI review |
 
-From the teaching repository root, inspect a reference:
+Each branch builds directly on the previous part's commit, so the ancestry and differences follow the teaching sequence. Earlier lessons remain available cumulatively. `main` contains all six textbook lessons; use it when you want to read ahead. The published course branch set is `main` plus these six learning branches.
+
+## Inspect a reference locally
+
+Use your separate reference clone:
 
 ```bash
-cd examples/stages/02-factory
+git fetch origin
+git switch learn/01-refactoring
+python -m pip install -r requirements.txt
 python -m calculator
 python -m pytest -q
 ```
 
-Use the already activated reference environment. Run tests from the snapshot root. Implement the lesson in your own solution, retaining earlier regressions; do not copy a whole snapshot over your project.
+Activate the reference environment first and run from the repository root. Parts 1–3 print demonstrations; Parts 4–6 accept interactive requests. Statistics and CSV begin in Part 5. Parts 1–4 need pytest only; Parts 5–6 add pandas.
 
-Parts contain smaller conceptual checkpoints even though there are only six main folders. The lesson explains what changed and why before linking the complete reference. Compare adjacent files and predict which existing behaviors should stay valid.
+Before changing a reference branch:
 
-## Historical branches
+```bash
+git status
+git switch learn/02-factory
+python -m pip install -r requirements.txt
+python -m pytest -q
+```
 
-The earlier `learn/01-statistics` through `learn/06-ci` branches in this repository describe the former statistics/command-factory curriculum. They remain historical references and do not match the revised APIs or assessments. The completed OOP calculator's own `learn/...` branches belong to that separate prerequisite course.
+Save any intended local experiments before switching. Git may carry compatible changes across branches or refuse a switch when changes conflict. Keep your implementation and ongoing work in your own solution repository rather than using the instructor's reference as a starter.
 
-Use the current six snapshots and lesson names together. If an old link points to `01-operations`, `02-calculations`, `03-factory`, or `06-ci`, follow [the migration guide](migration.md) to the current progression. Do not combine old starter tests with a new contract.
+If a learning branch is missing locally, fetch and explicitly create its tracking branch:
 
-Maintainers regenerate snapshots with `python tools/build_stages.py` and verify with `python tools/verify_course.py --full`. These utilities keep course references consistent; students demonstrate their own solution with application tests and CI.
+```bash
+git fetch origin
+git switch --track origin/learn/02-factory
+```
+
+Use that form only when the local branch does not already exist. `git switch main` returns to the full textbook and course-maintenance files.
+
+## Read the change between parts
+
+Before running the next part, predict which existing behaviors should still pass. Compare code and tests:
+
+```bash
+git diff origin/learn/01-refactoring..origin/learn/02-factory -- calculator tests
+```
+
+The [GitHub comparison](https://github.com/kaw393939/is218-command-factory-statistics/compare/learn/01-refactoring...learn/02-factory) shows the same first increment. Change both branch names to compare later neighbors. Part 3 intentionally changes operand interfaces; explain that requirement rather than treating the changed signature as an accidental regression.
+
+The former course branches have been replaced by this chain. Old branch URLs and instructions for the previous organization are no longer the current navigation. Consult [migration](migration.md) for API changes and use [setup](setup.md) for separate solution/reference environments.
+
+## For maintainers
+
+`main` holds the canonical final application, lessons, and utilities that verify the six branch contents. `python tools/build_stages.py --check` checks the actual local/remote learning refs for application freshness and linear ancestry; `python tools/verify_course.py --full` verifies documentation and runs each branch's application/tests from its root.
+
+Prepare complete branch trees without changing Git:
+
+```bash
+python tools/build_lesson_branches.py --output-dir /tmp/calculator-lessons
+```
+
+The export contains code, tests, cumulative lessons, setup/navigation, and a part-specific README. Review those trees, then commit/update learning branches sequentially so each new part descends from the previous part. The application-only `build_stages.py --output-dir` export does not provide the full lesson-branch contents. Keep publication and ancestry aligned with the teaching sequence; consult utility help before changing the export workflow.

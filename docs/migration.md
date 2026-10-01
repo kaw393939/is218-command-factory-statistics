@@ -2,6 +2,8 @@
 
 This course continues the completed [OOP calculator](https://github.com/kaw393939/is218-oop-calculator). The six parts deliberately preserve familiar ideas while changing the responsibilities needed for flexible math and application actions.
 
+`main` is the full textbook and maintenance source. Worked applications now live at the repository root on six cumulative branches, from `learn/01-refactoring` through `learn/06-transfer`. Each part builds directly on the preceding part's commit. The earlier course branches have been replaced; use [current branch navigation](branches.md) rather than an old branch URL or directory-based command.
+
 ## From your completed OOP calculator
 
 | Earlier design | Revised design | Why it changes |
@@ -25,19 +27,19 @@ Changing an API or terminal protocol requires updating tests that specify that i
 
 The former `CommandFactory`, `ManualStdDevCommand`, and `CsvStdDevCommand` are replaced by a calculation factory and distinct application commands. CSV is an input source, not a separate mathematical command. Commands return display text, while operations and calculations return numbers.
 
-The earlier local snapshot names map to the revised progression:
+Older lesson paths are compatibility entry points to the current lessons. Follow their redirects and use the matching current branch:
 
-| Earlier folder/lesson | Current part |
+| Earlier lesson topic/path | Current part and branch |
 | --- | --- |
-| `01-operations` and the start of `02-calculations` | [1. Refactoring](lessons/01-refactoring.md) |
-| Fixed-arity portion of `03-factory` | [2. Factory](lessons/02-factory.md) |
-| Flexible calculation/factory portions | [3. Flexible inputs](lessons/03-flexible-inputs.md) |
-| `04-commands` | [4. Commands](lessons/04-commands.md) |
-| `05-statistics-csv` | [5. Statistics and CSV](lessons/05-statistics-csv.md) |
-| `06-ci` | [6. Transfer](lessons/06-transfer.md) |
+| `01-operations` and the start of `02-calculations` | [1. Refactoring](lessons/01-refactoring.md), `learn/01-refactoring` |
+| Fixed-arity portion of `03-factory` | [2. Factory](lessons/02-factory.md), `learn/02-factory` |
+| Flexible calculation/factory portions | [3. Flexible inputs](lessons/03-flexible-inputs.md), `learn/03-flexible-inputs` |
+| `04-commands` | [4. Commands](lessons/04-commands.md), `learn/04-commands` |
+| `05-statistics-csv` | [5. Statistics and CSV](lessons/05-statistics-csv.md), `learn/05-statistics-csv` |
+| `06-ci` | [6. Transfer](lessons/06-transfer.md), `learn/06-transfer` |
 
 Shared finite-number conversion now lives in `calculator/validation.py`; `statistics.py` owns statistical behavior. Factory option validation uses explicit steps so the first explanation does not depend on set subtraction or `zip`.
 
 Practice and exam now require different adaptations of the same ideas. A population-default change is no longer the exam's distinguishing task. Read each assessment's own published contracts, resource rules, and scoring. The automated portion is 60 points, followed by 20 points for student tests and 20 for traces/design explanation.
 
-Maintainers update source, snapshots, lessons, assessment starters/solutions, and grading contracts together. `tools/verify_assessments.py` checks local sibling assessment repositories without distributing a real-exam solution as teaching code.
+Maintainers update source, cumulative branch contents, lessons, assessment starters/solutions, and grading contracts together. Students switch the separate reference clone to the appropriate learning branch and run from its repository root. Parts 1–4 require pytest only; Parts 5–6 add pandas. `tools/verify_assessments.py` checks local sibling assessment repositories without distributing a real-exam solution as teaching code.

@@ -1,6 +1,6 @@
 # Part 1: Refactor the calculator you already built
 
-[Course home](../../README.md) · [Worked reference](../../examples/stages/01-refactoring/README.md) · [Concepts](../concepts.md)
+[Course home](../../README.md) · [Worked reference](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/01-refactoring/calculator) · [Concepts](../concepts.md)
 
 [Next part](02-factory.md)
 
@@ -91,11 +91,11 @@ This is composition of behavior. The tradeoff is that a plain callable has no ex
 
 ## 1D — Keep the numeric and history contracts
 
-The earlier CLI already converted text and rejected infinity/NaN. Extract that known policy so direct callers get it too. Read validation.py in the snapshot: an explicit loop attempts float conversion, checks isfinite, and returns a tuple. There is no generator expression to learn here. Errors are raised so a caller can choose its response.
+The earlier CLI already converted text and rejected infinity/NaN. Extract that known policy so direct callers get it too. Read validation.py on this lesson branch: an explicit loop attempts float conversion, checks isfinite, and returns a tuple. There is no generator expression to learn here. Errors are raised so a caller can choose its response.
 
 The completed two-operand Calculation is:
 
-<!-- reference: examples/stages/01-refactoring/calculator/calculation.py -->
+<!-- reference: learn/01-refactoring/calculator/calculation.py -->
 ```python
 """Store two operands and a callable; run math only in get_result."""
 from math import isfinite
@@ -129,7 +129,7 @@ python -m pytest -q
 python -m calculator
 ```
 
-The worked snapshot prints 5.0. Retain arithmetic and history-copy tests. A zero-divisor calculation can be constructed, then fail during execution.
+This lesson branch prints 5.0. Retain arithmetic and history-copy tests. A zero-divisor calculation can be constructed, then fail during execution.
 
 **Completion problem:** fill in get_result for a stored subtract callable before looking at the reference. **Independent problem:** add an operation that calculates the absolute difference of two values and compare the edits required by inheritance and composition. The exercise is about extension choices, not memorizing one formula.
 

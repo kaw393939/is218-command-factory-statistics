@@ -5,7 +5,9 @@ Record the exact command, working folder, interpreter, expected result, and trac
 | Symptom | Inspect | Next step |
 | --- | --- | --- |
 | No module named pandas/pytest | Active interpreter | Install requirements using that interpreter's `-m pip` |
-| No module named calculator | Current directory | Run from your solution or a snapshot root |
+| No module named calculator | Current directory | Run from your solution root or the selected reference branch's repository root |
+| Reference displays features from a later part | Current branch | Check `git branch --show-current`; select your matching `learn/...` checkpoint |
+| Learning branch is not found | Remote references | Fetch in the reference clone; use a tracking branch as explained in navigation |
 | Entry point shows an earlier demonstration | Part/checkpoint | Parts 1–3 demonstrate math; Part 4 introduces the interactive loop |
 | Old tests import `Add`/`Subtract` after refactoring | Intentional API change | Preserve their behavior claim through static operations/composed calculation |
 | `CommandFactory` import fails | Which curriculum the code came from | Use current `CalculationFactory`; consult migration |
@@ -27,4 +29,4 @@ Record the exact command, working folder, interpreter, expected result, and trac
 
 After fixing the cause, rerun the focused test and the accumulated suite. Do not alter a requirement or catch every exception merely to make a traceback disappear.
 
-[Setup](setup.md) · [API migration](migration.md) · [Test evidence](testing-guide.md)
+[Setup](setup.md) · [Branch navigation](branches.md) · [API migration](migration.md) · [Test evidence](testing-guide.md)

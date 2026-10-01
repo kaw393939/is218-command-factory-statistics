@@ -24,3 +24,5 @@ Keep a short entry for each checkpoint. The prerequisite already gave you a work
 6. Explain one adaptation without looking at the worked solution. Record the submitted commit and the checks for that revision.
 
 A log saying only “tests passed” omits the claim. Write what the test established and how it would detect a plausible bug. Keep entries brief enough to revisit while studying.
+
+Record the instructor reference branch you inspected and your own solution commit separately. Compare neighboring reference branches to identify the teaching increment; your solution history records how you implemented and tested that change.

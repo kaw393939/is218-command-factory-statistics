@@ -1,6 +1,6 @@
 # Part 2: Create calculations with a factory
 
-[Course home](../../README.md) · [Worked reference](../../examples/stages/02-factory/README.md) · [Concepts](../concepts.md)
+[Course home](../../README.md) · [Worked reference](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/02-factory/calculator) · [Concepts](../concepts.md)
 
 [Previous part](01-refactoring.md) · [Next part](03-flexible-inputs.md)
 
@@ -40,7 +40,7 @@ These values have no calling parentheses. A class in the earlier registry was al
 
 Use the full creation helper after explaining the two-choice version:
 
-<!-- reference: examples/stages/02-factory/calculator/factory.py -->
+<!-- reference: learn/02-factory/calculator/factory.py -->
 ```python
 """A factory centralizes construction; it does not execute math."""
 from calculator.calculation import Calculation

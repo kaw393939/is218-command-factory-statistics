@@ -76,6 +76,10 @@ Keep real-exam solutions and official grading in the instructor-owned workspace.
 
 ## Maintain course consistency
 
-Edit canonical application/tests and stage transformations in `tools/build_stages.py`. Regenerate all six current snapshots and update lesson examples. Run `python tools/verify_course.py --full` and the sibling-assessment verifier. Check current stage help text rather than advertising later features prematurely.
+`main` is the course entry point and full textbook, and retains the canonical final application for maintenance. Each learning branch places its cumulative program, stage-relevant tests, and lesson material at the repository root. Maintain the direct ancestry from Part 1 through Part 6 so neighboring branch comparisons show one deliberate increment.
 
-Historical branches belong to previous curricula. Keep current source, snapshot names, supporting explanations, starter contracts, solutions, and rubric aligned. [Migration](migration.md) records intentional API changes; [navigation](branches.md) identifies the current six references.
+Edit canonical application/tests and branch-content transformations in `tools/build_stages.py`, and update lesson examples with the matching part's source. Check application freshness and ancestry on actual local/remote learning refs with `python tools/build_stages.py --check`; run `python tools/verify_course.py --full` from `main` for documentation and all six branch applications.
+
+`python tools/build_lesson_branches.py --output-dir /tmp/calculator-lessons` prepares complete root trees with code/tests, cumulative lessons, setup/navigation, and each branch's README. It does not change Git. Review the export, then commit/update branches in order, preserving the direct parent-child progression. The application-only `build_stages.py --output-dir` export is not the complete publication content. Check current-part help text rather than advertising later features prematurely. Parts 1–4 declare pytest only; pandas first becomes required in Part 5.
+
+The published branch set is `main` and the six current learning branches. The previous branch names have been replaced. Keep current branch names, linear ancestry, supporting explanations, assessment contracts, solutions, and rubric aligned. [Migration](migration.md) records intentional API changes; [navigation](branches.md) identifies switching and comparisons. Verify the sibling assessments after a change to shared concepts or contracts.

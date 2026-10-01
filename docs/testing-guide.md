@@ -30,7 +30,7 @@ def test_divide_rejects_zero():
 | 1–4: history | Different owners have independent entries; clearing a returned read list cannot clear owned state |
 | 2: factory | Name selects the intended operation and returns a calculation without executing it |
 | 3: flexible inputs | Unary/binary counts differ; values and named settings are forwarded correctly |
-| 3: snapshots | Caller mutation of the original list/options does not alter stored inputs |
+| 3: input copies | Caller mutation of the original list/options does not alter stored inputs |
 | 4: session/actions | Success records a saved result; failure records nothing; display does not recalculate |
 | 5: statistics | Known sample/population results and count/missing/nonfinite policies |
 | 5: CSV | Valid observations reach shared math; structural/numeric failures remain visible |
@@ -92,6 +92,8 @@ python -m pytest -q
 
 Coverage measures which lines/branches ran, not whether the assertions explain correctness. The teaching extension does not add a new exact coverage requirement; retain the prerequisite's setup when useful. Assessments have their own published rubric and do not award student-test credit solely for test count or coverage percentage.
 
-Course maintainers also run `python tools/verify_course.py --full` to check documentation and snapshots. Students need not implement that utility. A green CI run verifies its checked revision; inspect the run corresponding to your submitted commit.
+Run your reference checks from the repository root of the selected learning branch, and your solution checks from your own project root. Parts 1–4 use pytest without pandas; Parts 5–6 add pandas. Install the branch's declared requirements before testing it.
+
+From `main`, course maintainers also run `python tools/verify_course.py --full` to check documentation and all six cumulative branch applications. Students need not implement that utility. A green CI run verifies its checked revision; inspect the run corresponding to your submitted commit.
 
 [pytest fixtures](https://docs.pytest.org/en/stable/how-to/fixtures.html) · [monkeypatch](https://docs.pytest.org/en/stable/how-to/monkeypatch.html) · [approx](https://docs.pytest.org/en/stable/reference/reference.html#pytest-approx)

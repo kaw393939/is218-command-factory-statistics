@@ -1,8 +1,8 @@
 # Part 6: Integrate, explain, and adapt
 
-[Course home](../../README.md) · [Worked reference](../../examples/stages/06-transfer/README.md) · [Concepts](../concepts.md)
+[Course home](../../README.md) · [Worked reference](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/06-transfer/calculator) · [Concepts](../concepts.md)
 
-[Previous part](05-statistics-csv.md) · ## Apply the design to a changed requirement
+[Previous part](05-statistics-csv.md)
 
 You already learned tests, coverage, and CI in the previous course. Use them as evidence here. The new work is reading a requirement, locating the right responsibility, and adapting behavior without copying a whole reference application.
 
@@ -20,7 +20,7 @@ So far a person submits one request per prompt. A new caller may supply several 
 
 Before coding, decide: where does iteration belong, where is success recorded, and which errors should be caught? Keep session.calculate's successful-only rule. Do not move it into each caller.
 
-<!-- reference: examples/stages/06-transfer/calculator/sequence.py -->
+<!-- reference: learn/06-transfer/calculator/sequence.py -->
 ```python
 """Guided transfer: process already prepared calculations independently.
 
@@ -66,10 +66,9 @@ Run cumulative tests and a fresh-environment demonstration. Review the existing 
 
 ```bash
 python -m pytest -q
-python tools/verify_course.py --full
 ```
 
-The second command is a reference-maintenance check, not a file students must recreate. It verifies links/excerpts and every cumulative snapshot. Assessment maintainers also use tools/verify_assessments.py to confirm starters fail, references pass, unchanged copied code fails new requirements, and important regressions lose points.
+Course maintainers separately run `python tools/verify_course.py --full` from `main` to verify links, excerpts, and all six cumulative lesson branches. Students do not recreate that utility. Assessment maintainers also use tools/verify_assessments.py to confirm starters fail, references pass, unchanged copied code fails new requirements, and important regressions lose points.
 
 For student tests, explain the requirement each assertion establishes. Good examples distinguish successful execution from construction, verify success after an earlier failure, and demonstrate that mutating a returned history list cannot alter internal state. Avoid merely repeating a supplied acceptance test or asserting the reference's source text.
 

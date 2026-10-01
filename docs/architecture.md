@@ -1,6 +1,6 @@
 # Follow construction, execution, and failure
 
-Use this page after the relevant part, not as a list of components to memorize at the start. Parts 1–3 establish math and creation; Part 4 introduces application actions; Part 5 adds the file route; Part 6 transfers the flow to prepared sequences.
+Use this page after the relevant part, not as a list of components to memorize at the start. Parts 1–3 establish math and creation; Part 4 introduces application actions; Part 5 adds the file route; Part 6 transfers the flow to prepared sequences. The map below describes the final `learn/06-transfer` branch. Earlier branches contain only the components introduced by their part, at the repository root.
 
 ## Read the final file map
 

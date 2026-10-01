@@ -15,7 +15,7 @@ Before starting, explain how `Add(2, 3).get_result()` works, why clearing a list
 | [5. Add statistics and CSV](lessons/05-statistics-csv.md) | Collections and shared validation | Can terminal values and a file use the same mathematical policy? |
 | [6. Explain and transfer](lessons/06-transfer.md) | Tests, error recovery, and CI | Can you adapt the design to a changed requirement and justify the change? |
 
-Each part contains smaller checkpoints. Understand and test the change before reading the complete file. A full snapshot is a reference after a checkpoint, not the first explanation of it.
+Each part contains smaller checkpoints. Understand and test the change before reading the complete file. The matching cumulative branch is a reference after a checkpoint, not the first explanation of it. `main` contains the full textbook; the six learning branches keep code, tests, and lesson material aligned with the current part. See [branch navigation](branches.md) to switch and compare them.
 
 ## Assign each responsibility deliberately
 

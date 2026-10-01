@@ -1,6 +1,6 @@
 # Part 3: One, two, and many operands
 
-[Course home](../../README.md) · [Worked reference](../../examples/stages/03-flexible-inputs/README.md) · [Concepts](../concepts.md)
+[Course home](../../README.md) · [Worked reference](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/03-flexible-inputs/calculator) · [Concepts](../concepts.md)
 
 [Previous part](02-factory.md) · [Next part](04-commands.md)
 

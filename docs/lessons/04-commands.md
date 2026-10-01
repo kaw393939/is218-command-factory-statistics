@@ -1,6 +1,6 @@
 # Part 4: Turn application actions into commands
 
-[Course home](../../README.md) · [Worked reference](../../examples/stages/04-commands/README.md) · [Concepts](../concepts.md)
+[Course home](../../README.md) · [Worked reference](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/04-commands/calculator) · [Concepts](../concepts.md)
 
 [Previous part](03-flexible-inputs.md) · [Next part](05-statistics-csv.md)
 
@@ -14,7 +14,7 @@ Your earlier calculator already accepts math requests, history, help, and exit. 
 
 Earlier, the CLI called get_result and then History.add. Move those two statements together so another caller cannot accidentally record a failed calculation:
 
-<!-- reference: examples/stages/04-commands/calculator/session.py -->
+<!-- reference: learn/04-commands/calculator/session.py -->
 ```python
 """Execute calculations and record successful results through History."""
 from calculator.history import History
@@ -117,7 +117,7 @@ exit
 
 prepare_command splits text into positional values and key=value settings, then calls the factory and wraps the calculation. Duplicate option names fail before construction. This parser is supplied so learning Command does not require writing a new grammar simultaneously. Paths containing spaces are outside the deliberately small protocol.
 
-Open the snapshot's cli.py once you can explain this boundary. Its run loop reads, prepares, invokes, prints, and repeats. It catches expected errors and ends cleanly on EOF/Ctrl+C. Exit is loop control, not a mathematical operation.
+Open this branch's calculator/cli.py once you can explain this boundary. Its run loop reads, prepares, invokes, prints, and repeats. It catches expected errors and ends cleanly on EOF/Ctrl+C. Exit is loop control, not a mathematical operation.
 
 ## 4E — Trace success and failure
 

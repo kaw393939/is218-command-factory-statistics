@@ -1,6 +1,6 @@
 # Part 5: Statistics and another input source
 
-[Course home](../../README.md) · [Worked reference](../../examples/stages/05-statistics-csv/README.md) · [Concepts](../concepts.md)
+[Course home](../../README.md) · [Worked reference](https://github.com/kaw393939/is218-command-factory-statistics/tree/learn/05-statistics-csv/calculator) · [Concepts](../concepts.md)
 
 [Previous part](04-commands.md) · [Next part](06-transfer.md)
 
@@ -29,7 +29,7 @@ result = float(numbers.std(ddof=1))
 
 A Series is a one-dimensional collection. dtype=float specifies numeric representation. std computes spread. The outer float gives the caller a Python float. Type hints do not perform this conversion.
 
-Add mean and standard_deviation shared functions using the existing numeric_values converter. Validate before aggregation: pandas' default missing-value handling could otherwise discard an observation silently. Reject unsupported ddof, too few observations, missing/nonfinite inputs, and nonfinite results. Inspect statistics.py in the completed snapshot after implementing a happy path and then one failure rule at a time.
+Add mean and standard_deviation shared functions using the existing numeric_values converter. Validate before aggregation: pandas' default missing-value handling could otherwise discard an observation silently. Reject unsupported ddof, too few observations, missing/nonfinite inputs, and nonfinite results. Inspect statistics.py on this lesson branch after implementing a happy path and then one failure rule at a time.
 
 Operations.mean/stddev delegate to those functions. Register their callables in the same calculation factory. stddev accepts ddof as a keyword-only setting. These are extensions of Part 3's mechanisms, not a new command hierarchy.
 
@@ -57,7 +57,7 @@ read_csv returns a DataFrame, a table. Selecting the value column produces a Ser
 
 The reader's complete boundary is:
 
-<!-- reference: examples/stages/05-statistics-csv/calculator/inputs.py -->
+<!-- reference: learn/05-statistics-csv/calculator/inputs.py -->
 ```python
 """Read a CSV input source; choosing and performing math belong elsewhere."""
 from pathlib import Path
